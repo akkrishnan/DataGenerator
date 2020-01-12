@@ -1,4 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
+
+import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
+import {
+  ErrorStateMatcher,
+  MatPaginator,
+  MatSort,
+  MatTableDataSource
+} from '@angular/material';
+import { DataSource } from '@angular/cdk/table';
+import { Observable } from 'rxjs';
+import { take, startWith, map } from 'rxjs/operators';
+
+export interface UserData {
+  id: string;
+  name: string;
+  progress: string;
+  color: string;
+}
+
+/** Constants used to fill up our data base. */
+const COLORS: string[] = [
+  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
+  'aqua', 'blue', 'navy', 'black', 'gray'
+];
+const NAMES: string[] = [
+  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
+  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
+];
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +36,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  
+
+  displayedColumns: string[] = ['id', 'name', 'progress', 'color'];
+  dataSource: MatTableDataSource<UserData>;
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  constructor() {
+    // Create 100 users
+    const users = Array.from({ length: 100 }, (_, k) => this.createNewUser(k + 1));
+
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(users);
+  }
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  /** Builds and returns a new User. */
+  createNewUser(id: number): UserData {
+    const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
+      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
+
+    return {
+      id: id.toString(),
+      name: name,
+      progress: Math.round(Math.random() * 100).toString(),
+      color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
+    };
   }
 
 }

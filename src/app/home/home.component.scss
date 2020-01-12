@@ -1,0 +1,106 @@
+$fieldWidth: 400px;
+$cardWidth: 700px;
+$redColor: red;
+$smallCardWidth: 185px;
+$tripleCardWidth: 120px;
+$attributeContentStyleWidth: 375px;
+$appFormContainerDiv: 390px;
+
+.mat-card {
+  padding: 10px !important;
+}
+
+.app-form-container {
+  display: flex;
+  flex-direction: column;
+
+  ::ng-deep {
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  ::ng-content .toolbar-logout {
+    .mat-raised-button {
+      left: 1020px;
+    }
+  }
+
+  .app-form-container>* {
+    width: 100%;
+  }
+
+  .app-form-container-div {
+    margin-top: 10px;
+    height: $appFormContainerDiv;
+    overflow-y: auto;
+  }
+
+  .headerToolBar span {
+    font-weight: bold;
+    font-size: 23px;
+  }
+
+  .vAlignTop {
+    vertical-align: top;
+  }
+
+  mat-form-field {
+    width: $fieldWidth;
+  }
+
+  .cardWidth {
+    width: $cardWidth;
+  }
+
+  ::ng-deep .attributeContentStyle {
+    .mat-form-field-wrapper {
+      width: $attributeContentStyleWidth !important;
+    }
+  }
+
+  .attributeCardWidth {
+    width: $attributeContentStyleWidth;
+  }
+
+  ::ng-deep .attributeCardShortWidth {
+    .mat-form-field-wrapper {
+      width: $smallCardWidth !important;
+    }
+  }
+
+  ::ng-deep .attributeCardShortWidth {
+    ::ng-deep .mat-form-field {
+      width: $smallCardWidth !important;
+    }
+  }
+
+  .smallCardWidth {
+    width: $smallCardWidth;
+  }
+
+  ::ng-deep .attributeTripleCardWidth {
+    .mat-form-field-wrapper {
+      width: $tripleCardWidth !important;
+    }
+  }
+
+  ::ng-deep .attributeTripleCardWidth {
+    ::ng-deep .mat-form-field {
+      width: $tripleCardWidth !important;
+    }
+  }
+
+  .tripleCardWidth {
+    width: $tripleCardWidth;
+  }
+
+}

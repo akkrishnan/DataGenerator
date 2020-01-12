@@ -1,0 +1,19 @@
+.header_banner {
+  background: url('../../assets/images/header.jpg');
+  height: 230px;
+  width: 100%;
+}
+
+.login_card {
+  align-content: center !important;
+  width: 500px;
+  margin-top: 20px;
+
+  .login_text_full_width {
+    width: 100%;
+  }
+
+  .mat-card {
+    padding: 40px;
+  }
+}

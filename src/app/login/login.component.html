@@ -1,1 +1,31 @@
-<p>login works!</p>
+<div class="header_banner"></div>
+<div width="100%" align="center">
+    <div class="login_card">
+        <mat-card>
+            <form class="login_form" [formGroup]="loginFormGroup" (ngSubmit)="onSubmit(loginFormGroup.value)"
+                class="form">
+                <p>
+                    <mat-form-field class="login_text_full_width">
+                        <mat-label>Login</mat-label>
+                        <input formControlName="loginText" matInput placeholder="Login" autocomplete="off" value=""
+                            required>
+                        <mat-error *ngIf="loginFormGroup.controls['loginText'].invalid">{{validateLogin()}}</mat-error>
+                    </mat-form-field>
+                </p>
+
+                <p>
+                    <mat-form-field class="login_text_full_width">
+                        <mat-label>Password</mat-label>
+                        <input formControlName="passwordText" type="password" matInput placeholder="Password"
+                            autocomplete="off" value="" required>
+                        <mat-error *ngIf="loginFormGroup.controls['passwordText'].invalid">{{validatePass()}}
+                        </mat-error>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <button mat-raised-button color="primary" matTooltip="Login">Login</button>
+                </p>
+            </form>
+        </mat-card>
+    </div>
+</div>

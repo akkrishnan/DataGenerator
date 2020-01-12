@@ -1,0 +1,13 @@
+$searchFieldWidth : 300px;
+
+::ng-deep .searchField {
+  .mat-form-field-wrapper {
+    width: $searchFieldWidth !important;
+  }
+}
+
+::ng-deep .dashboardGrid {
+  .mat-header-cell {
+    font-weight: bold;
+  }
+}
