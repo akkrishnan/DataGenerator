@@ -9,7 +9,7 @@
                 <p>
                     <mat-form-field class="login_text_full_width">
                         <mat-label>Login</mat-label>
-                        <input formControlName="loginText" matInput placeholder="Login" autocomplete="off" value=""
+                        <input formControlName="loginText" matInput matTooltip="Enter the username" placeholder="Login" autocomplete="off" value=""
                             required>
                         <mat-error *ngIf="loginFormGroup.controls['loginText'].invalid">{{validateLogin()}}</mat-error>
                     </mat-form-field>
@@ -18,12 +18,13 @@
                 <p>
                     <mat-form-field class="login_text_full_width">
                         <mat-label>Password</mat-label>
-                        <input formControlName="passwordText" type="password" matInput placeholder="Password"
+                        <input formControlName="passwordText" matTooltip="Enter the password" type="password" matInput placeholder="Password"
                             autocomplete="off" value="" required>
                         <mat-error *ngIf="loginFormGroup.controls['passwordText'].invalid">{{validatePass()}}
                         </mat-error>
                     </mat-form-field>
                 </p>
+                <a href="#"><span class="md-accent">Forgot Password?</span></a>
                 <p>
                     <button mat-raised-button color="primary" matTooltip="Login">Login</button>
                 </p>
