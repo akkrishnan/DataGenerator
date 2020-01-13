@@ -13,8 +13,9 @@ import { take, startWith, map } from 'rxjs/operators';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
-  title: string = 'Login Screen';
+
+  title = 'Login Screen';
+  loginTitle = 'Data Generator Tool';
 
   loginFormGroup: FormGroup;
   post: any = '';
