@@ -28,6 +28,7 @@ import { HomeComponent } from './home/home.component';
 import { DatageneratorComponent } from './datagenerator/datagenerator.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
+import { LoginModule } from './login/login.module';
 import { HeaderComponent } from './header/header.component';
 
 @NgModule({
@@ -40,6 +41,7 @@ import { HeaderComponent } from './header/header.component';
     HeaderComponent
   ],
   imports: [
+    LoginModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,

@@ -1,7 +1,7 @@
 <app-header></app-header>
 <diV width="100%" align="right" style="padding-right:20px;margin-top:20px;">
     <mat-form-field class="searchField">
-        <input matInput autocomplete="off" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        <input matInput autocomplete="off" matTooltip="Enter any column data" (keyup)="applyFilter($event.target.value)" placeholder="Search">
     </mat-form-field>
 </diV>
 
@@ -11,13 +11,13 @@
         <!-- ID Column -->
         <ng-container matColumnDef="id">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+            <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.id}}> {{row.id}} </mat-cell>
         </ng-container>
 
         <!-- Progress Column -->
         <ng-container matColumnDef="progress">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row"> {{row.progress}}% </mat-cell>
+            <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.progress}}> {{row.progress}}% </mat-cell>
         </ng-container>
 
         <!-- Name Column -->
@@ -29,7 +29,8 @@
         <!-- Color Column -->
         <ng-container matColumnDef="color">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell>
+            <!-- <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell> -->
+            <mat-cell mat-cell *matCellDef="let row" > {{row.color}} </mat-cell>
         </ng-container>
 
         <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -37,5 +38,5 @@
         </mat-row>
     </mat-table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100, 1000]"></mat-paginator>
 </div>

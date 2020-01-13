@@ -36,8 +36,6 @@ const NAMES: string[] = [
 })
 export class DashboardComponent implements OnInit {
 
-  
-
   displayedColumns: string[] = ['id', 'name', 'progress', 'color'];
   dataSource: MatTableDataSource<UserData>;
 
@@ -46,7 +44,7 @@ export class DashboardComponent implements OnInit {
 
   constructor() {
     // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => this.createNewUser(k + 1));
+    const users = Array.from({ length: 1000 }, (_, k) => this.createNewUser(k + 1));
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
@@ -67,12 +65,12 @@ export class DashboardComponent implements OnInit {
 
   /** Builds and returns a new User. */
   createNewUser(id: number): UserData {
-    const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
+    const nameVal = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
       NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
 
     return {
       id: id.toString(),
-      name: name,
+      name: nameVal,
       progress: Math.round(Math.random() * 100).toString(),
       color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
     };
