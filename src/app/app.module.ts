@@ -22,7 +22,7 @@ import {
   MatTabsModule
 } from '@angular/material';
 
-import appRoutes from './routerConfig';
+import { appRoutes } from './routerConfig';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { DatageneratorComponent } from './datagenerator/datagenerator.component';

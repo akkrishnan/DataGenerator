@@ -105,7 +105,7 @@ export class DatageneratorComponent implements OnInit {
   }
 
   setTitle() {
-    this.titleService.setTitle('TTTTTT');
+    this.titleService.setTitle('Data Generator');
   }
 
   navigateToHome(urlString: string) {

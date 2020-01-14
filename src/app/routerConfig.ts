@@ -12,12 +12,17 @@ export const appRoutes: Routes = [
     //     redirectTo: '/login',
     //     pathMatch: 'full'
     // },
-    
+
     {
-        path: '',
+        path: 'login',
         // redirectTo: 'login',
         component: LoginComponent,
-        pathMatch: 'full'
+        children: [
+            {
+                path: 'home',
+                component: HomeComponent
+            }
+        ]
     },
     {
         path: 'home',

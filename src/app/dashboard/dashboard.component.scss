@@ -8,6 +8,11 @@ $searchFieldWidth : 300px;
   font-size: 20px;
 }
 
+mat-cell:nth-child(1),
+mat-header-cell:nth-child(1) {
+    flex: 0 0 15%;
+}
+
 ::ng-deep .searchField {
   .mat-form-field-wrapper {
     width: $searchFieldWidth !important;
@@ -16,8 +21,9 @@ $searchFieldWidth : 300px;
 
 ::ng-deep .dashboardGrid {
   .mat-header-cell {
-    font-weight: bold;
+    font-weight: 500;
     font-size: 15px;
+    color : #000;
   }
 }
 

@@ -25,18 +25,12 @@
     <mat-table mat-table [dataSource]="dataSource" matSort class="dashboardGrid">
 
         <!-- ID Column -->
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="id" width="30">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
             <mat-cell mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
         </ng-container>
 
-        <!-- Progress Column -->
-        <!-- <ng-container matColumnDef="progress">
-            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row"> {{row.progress}}% </mat-cell>
-        </ng-container> -->
-
-        <!-- Name Column -->
+        <!-- User Name Column -->
         <ng-container matColumnDef="name">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
             <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.name}}> {{row.name}} </mat-cell>
@@ -54,5 +48,5 @@
         </mat-row>
     </mat-table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100, 1000]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>

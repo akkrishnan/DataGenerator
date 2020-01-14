@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
 
 import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
+import { DashboardService } from './dashboard.service';
 import {
   ErrorStateMatcher,
   MatPaginator,
@@ -41,7 +42,8 @@ const NAMES: string[] = [
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  providers: [DashboardService]
 })
 export class DashboardComponent implements OnInit {
 
@@ -51,19 +53,25 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor() {
+  constructor(private service: DashboardService) {
     // Create 100 users
-    const users = Array.from({ length: 1000 }, (_, k) =>
-      this.createNewUser(Math.round(Math.random() * 10000000))
+    const users = Array.from({ length: 100 }, (_, k) =>
+      this.createNewUser(10340 + k)
     );
-
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+    // this.dataSource = new MatTableDataSource(users);
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
+
+    this.service.getList().then(res => {
+      this.displayedColumns = Object.keys(res[0])
+      this.dataSource = new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   applyFilter(filterValue: string) {
