@@ -1,0 +1,17 @@
+[
+    {
+        "id":"1",
+        "name":"Krish User 0001",
+        "position":"Manager"
+    },
+    {
+        "id":"2",
+        "name":"Krish User 0002",
+        "position":"Employee"
+    },
+    {
+        "id":"3",
+        "name":"Krish User 0003",
+        "position":"Officers"
+    }
+]

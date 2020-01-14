@@ -15,18 +15,27 @@ import { take, startWith, map } from 'rxjs/operators';
 export interface UserData {
   id: string;
   name: string;
-  progress: string;
+  status: string;
+  // progress: string;
   color: string;
 }
 
 /** Constants used to fill up our data base. */
 const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
+  'red', 'orange', 'green', 'lime'
 ];
+
+const STATUS: string[] = [
+  'REJECTED', 'IN PROGRESS', 'COMPLETED', 'IN QUEUE'
+];
+
+// const COLORS: string[] = [
+//   'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
+//   'aqua', 'blue', 'navy', 'black', 'gray'
+// ];
 const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
+  'Kennedy', 'Antony', 'Adam', 'Ester', 'Murali', 'Jack', 'Vijay', 'Krish', 'Gaurav', 'Aravind',
+  'Pankaj', 'Ashok', 'Prashant', 'Soma', 'Tony', 'Saurav', 'Mercy', 'Thomas', 'Tom'
 ];
 
 @Component({
@@ -36,7 +45,7 @@ const NAMES: string[] = [
 })
 export class DashboardComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'progress', 'color'];
+  displayedColumns: string[] = ['id', 'name', 'color'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -44,7 +53,9 @@ export class DashboardComponent implements OnInit {
 
   constructor() {
     // Create 100 users
-    const users = Array.from({ length: 1000 }, (_, k) => this.createNewUser(k + 1));
+    const users = Array.from({ length: 1000 }, (_, k) =>
+      this.createNewUser(Math.round(Math.random() * 10000000))
+    );
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
@@ -67,12 +78,14 @@ export class DashboardComponent implements OnInit {
   createNewUser(id: number): UserData {
     const nameVal = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
       NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
+    const idx = Math.round(Math.random() * (COLORS.length - 1));
 
     return {
       id: id.toString(),
       name: nameVal,
-      progress: Math.round(Math.random() * 100).toString(),
-      color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
+      status: STATUS[idx],
+      // progress: Math.round(Math.random() * 100).toString(),
+      color: COLORS[idx]
     };
   }
 

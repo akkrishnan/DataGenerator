@@ -12,3 +12,14 @@ $searchFieldWidth : 300px;
     font-size: 15px;
   }
 }
+
+::ng-deep .searchFieldHeader {
+  .mat-card {
+    box-shadow: none !important;
+    background: none !important;
+  }
+  .mat-card:not([class*=mat-elevation-z]){
+    box-shadow: none !important;
+  }
+
+}

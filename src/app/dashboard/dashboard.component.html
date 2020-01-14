@@ -1,36 +1,50 @@
 <app-header></app-header>
-<diV width="100%" align="right" style="padding-right:20px;margin-top:20px;">
-    <mat-form-field class="searchField">
-        <input matInput autocomplete="off" matTooltip="Enter any column data" (keyup)="applyFilter($event.target.value)" placeholder="Search">
-    </mat-form-field>
-</diV>
-
+<table width="100%">
+    <tr>
+        <td width="80%">
+            <mat-card class="searchFieldHeader"> 
+                <mat-card-header align="left">
+                    <mat-card-title>Data Request Summary</mat-card-title>
+                    <mat-card-subtitle>Below is the Top 5 data request summary</mat-card-subtitle>
+                 </mat-card-header> 
+            </mat-card> 
+        </td>
+        <td>
+            <div width="100%" align="right" style="padding-right:20px;margin-top:20px;">
+                <mat-form-field class="searchField">
+                    <input matInput autocomplete="off" matTooltip="Enter any column data"
+                        (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                </mat-form-field>
+            </div>
+        </td>
+    </tr>
+</table>
 <div class="mat-elevation-z8">
     <mat-table mat-table [dataSource]="dataSource" matSort class="dashboardGrid">
 
         <!-- ID Column -->
         <ng-container matColumnDef="id">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.id}}> {{row.id}} </mat-cell>
+            <mat-cell mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
         </ng-container>
 
         <!-- Progress Column -->
-        <ng-container matColumnDef="progress">
+        <!-- <ng-container matColumnDef="progress">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.progress}}> {{row.progress}}% </mat-cell>
-        </ng-container>
+            <mat-cell mat-cell *matCellDef="let row"> {{row.progress}}% </mat-cell>
+        </ng-container> -->
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.name}}> {{row.name}} </mat-cell>
         </ng-container>
 
         <!-- Color Column -->
         <ng-container matColumnDef="color">
-            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
             <!-- <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell> -->
-            <mat-cell mat-cell *matCellDef="let row" > {{row.color}} </mat-cell>
+            <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
         </ng-container>
 
         <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

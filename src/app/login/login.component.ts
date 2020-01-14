@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   loginFormGroup: FormGroup;
   post: any = '';
-
+  
   loginErrMessage = 'Please enter the username';
   pwdErrMessage = 'Please enter the password';
 

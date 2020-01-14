@@ -6,7 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { DatageneratorComponent } from './datagenerator/datagenerator.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
     // {
     //     path: '',
     //     redirectTo: '/login',
@@ -17,10 +17,6 @@ const appRoutes: Routes = [
         // redirectTo: 'login',
         component: LoginComponent,
         pathMatch: 'full'
-        // children: [{
-        //     path: '',
-        //     loadChildren: './login/login.module#LoginModule'
-        // }]
     },
     {
         path: 'home',
