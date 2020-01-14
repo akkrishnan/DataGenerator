@@ -2,17 +2,19 @@
 <table width="100%">
     <tr>
         <td width="80%">
-            <mat-card class="searchFieldHeader"> 
+            <div class="mat-card-title marginL dashboard-title">Data Request Summary</div>
+            <div class="mat-card-subtitle marginL">Below is the Top 5 data request summary</div>
+            <!-- <mat-card class="searchFieldHeader"> 
                 <mat-card-header align="left">
                     <mat-card-title>Data Request Summary</mat-card-title>
                     <mat-card-subtitle>Below is the Top 5 data request summary</mat-card-subtitle>
                  </mat-card-header> 
-            </mat-card> 
+            </mat-card>  -->
         </td>
         <td>
             <div width="100%" align="right" style="padding-right:20px;margin-top:20px;">
                 <mat-form-field class="searchField">
-                    <input matInput autocomplete="off" matTooltip="Enter any column data"
+                    <input matInput autocomplete="off" matTooltip="Enter any data to filter"
                         (keyup)="applyFilter($event.target.value)" placeholder="Search">
                 </mat-form-field>
             </div>

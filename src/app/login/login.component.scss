@@ -4,17 +4,25 @@
   width: 100%;
 }
 
+.login-small-font {
+  font-size: 75%;
+}
+
+::ng-deep .login-button-width {
+  width: 150px;
+}
+
 .login_card {
   align-content: center !important;
   width: 500px;
   margin-top: 20px;
 
   .login_text_full_width {
-    width: 100%;
+    width: 80%;
   }
 
   .mat-card {
-    padding: 40px;
+    padding: 20px;
   }
 
 }

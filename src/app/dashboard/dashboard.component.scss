@@ -1,5 +1,13 @@
 $searchFieldWidth : 300px;
 
+.marginL {
+  margin-left: 22px;
+}
+
+.dashboard-title {
+  font-size: 20px;
+}
+
 ::ng-deep .searchField {
   .mat-form-field-wrapper {
     width: $searchFieldWidth !important;
@@ -18,7 +26,8 @@ $searchFieldWidth : 300px;
     box-shadow: none !important;
     background: none !important;
   }
-  .mat-card:not([class*=mat-elevation-z]){
+
+  .mat-card:not([class*=mat-elevation-z]) {
     box-shadow: none !important;
   }
 

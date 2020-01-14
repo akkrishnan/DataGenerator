@@ -17,11 +17,15 @@ export class LoginComponent implements OnInit {
   title = 'Login Screen';
   loginTitle = 'Data Generator Tool';
 
+  loginErrorFlag = false;
+
   loginFormGroup: FormGroup;
   post: any = '';
-  
+
   loginErrMessage = 'Please enter the username';
   pwdErrMessage = 'Please enter the password';
+
+  loginpwdErrMessage = 'Please both username & password to login';
 
   ngOnInit() {
     this.createLoginForm();
@@ -42,15 +46,31 @@ export class LoginComponent implements OnInit {
     return this.loginFormGroup.get(param).hasError('required');
   }
 
-  validateLogin() {
-    return this.validateTextField('loginText') ? this.loginErrMessage : '';
+  validateUsername() {
+    const errorFlag = this.validateTextField('loginText') || false;
+    // this.loginErrorFlag = errorFlag;
+    return errorFlag ? this.loginErrMessage : '';
   }
 
   validatePass() {
-    return this.validateTextField('passwordText') ? this.pwdErrMessage : '';
+    const errorFlag = this.validateTextField('passwordText') || false;
+    // this.loginErrorFlag = errorFlag;
+    return errorFlag ? this.pwdErrMessage : '';
   }
 
   onSubmit() {
-    this.router.navigate(['/home']);
+    if (!this.validateLoginFields()) {
+      this.router.navigate(['/home']);
+    }
   }
+
+  validateLoginFields(){
+    this.loginErrorFlag = (this.validateTextField('loginText') || this.validateTextField('passwordText'));
+    return this.loginErrorFlag;
+  }
+
+  validateErrorMessage(){
+    this.loginErrorFlag = (this.validateTextField('loginText') || this.validateTextField('passwordText'));
+  }
+  
 }
