@@ -2,7 +2,7 @@
 const express = require('express');
 const usersRouter = express.Router();
 const fs = require('fs');
-const dataPath = './data/test-data.json';
+const dataPath = './data/toprequests.json';
 
 usersRouter.get('/', (req, res) => {
   fs.readFile(dataPath, 'utf8', (err, data) => {

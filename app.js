@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 // const sample = require('./routes/sample.js');
 const app = express();
 const routes = require('./routes/routes.js');
-const userRoutes = require('./routes/users.js');
+const userRoutes = require('./routes/requests.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -18,5 +18,5 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(path.join(__dirname, './dist/DataGenerator')));
 app.use('/login', express.static(path.join(__dirname, './dist/DataGenerator')));
 app.use('/api', routes);
-app.use('/api/users', userRoutes);
+app.use('/api/getTopRequests', userRoutes);
 module.exports = app;

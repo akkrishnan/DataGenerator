@@ -9,7 +9,7 @@ export class DashboardService {
     private http: HttpClient
   ) { }
 
-  private url = './api/users';
+  private url = './api/getTopRequests';
 
   getList(): Promise<any> {
     const url = `${this.url}`;
