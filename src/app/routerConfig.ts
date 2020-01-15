@@ -15,7 +15,6 @@ export const appRoutes: Routes = [
 
     {
         path: 'login',
-        // redirectTo: 'login',
         component: LoginComponent,
         children: [
             {

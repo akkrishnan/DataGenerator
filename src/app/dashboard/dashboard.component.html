@@ -36,10 +36,11 @@
             <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.name}}> {{row.name}} </mat-cell>
         </ng-container>
 
-        <!-- Color Column -->
-        <ng-container matColumnDef="color">
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
             <!-- <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell> -->
+            <!-- <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell> -->
             <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
         </ng-container>
 

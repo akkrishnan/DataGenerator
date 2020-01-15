@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng build && node index.js",
+    "start": "ng build && nodemon server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -28,6 +28,7 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "body-parser": "^1.19.0",
     "csvjson": "^5.1.0",
     "express": "^4.17.1",
     "hammerjs": "^2.0.8",

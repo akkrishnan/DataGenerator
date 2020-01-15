@@ -9,7 +9,7 @@ export class DashboardService {
     private http: HttpClient
   ) { }
 
-  private url = 'https://jsonplaceholder.typicode.com/todos';
+  private url = './api/users';
 
   getList(): Promise<any> {
     const url = `${this.url}`;

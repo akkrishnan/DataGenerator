@@ -43,11 +43,13 @@ const NAMES: string[] = [
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  providers: [DashboardService]
+  providers: [
+    DashboardService
+  ]
 })
 export class DashboardComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'color'];
+  displayedColumns: string[] = ['id', 'name', 'status'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -55,9 +57,9 @@ export class DashboardComponent implements OnInit {
 
   constructor(private service: DashboardService) {
     // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) =>
-      this.createNewUser(10340 + k)
-    );
+    // const users = Array.from({ length: 100 }, (_, k) =>
+    //   this.createNewUser(10340 + k)
+    // );
     // Assign the data to the data source for the table to render
     // this.dataSource = new MatTableDataSource(users);
   }
@@ -67,7 +69,10 @@ export class DashboardComponent implements OnInit {
     // this.dataSource.sort = this.sort;
 
     this.service.getList().then(res => {
-      this.displayedColumns = Object.keys(res[0])
+      this.displayedColumns = Object.keys(res[0]);
+
+      this.displayedColumns.splice(this.displayedColumns.indexOf('color'), 1);
+
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -92,7 +97,6 @@ export class DashboardComponent implements OnInit {
       id: id.toString(),
       name: nameVal,
       status: STATUS[idx],
-      // progress: Math.round(Math.random() * 100).toString(),
       color: COLORS[idx]
     };
   }
