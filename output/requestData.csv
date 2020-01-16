@@ -1,0 +1,2 @@
+fileName,destination,noOfCols,noOfRows,colDelimeter,attributeName,dataType,dataPattern,startingFrom,endingTo,startingLength,endingLength,fixedLength,charactersFor
+demo006,d:\,1,1,	,somename1,Existing data backup,NUMERIC,1,1,1,1,1,t

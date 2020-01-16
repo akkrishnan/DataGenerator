@@ -19,7 +19,8 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 import { appRoutes } from './routerConfig';
@@ -30,6 +31,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { LoginModule } from './login/login.module';
 import { HeaderComponent } from './header/header.component';
+import { MessageBarComponent } from './message-bar/message-bar.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { HeaderComponent } from './header/header.component';
     DatageneratorComponent,
     DashboardComponent,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
+    MessageBarComponent
   ],
   imports: [
     LoginModule,
@@ -61,6 +64,7 @@ import { HeaderComponent } from './header/header.component';
     MatPaginatorModule,
     MatSortModule,
     MatTabsModule,
+    MatSnackBarModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],

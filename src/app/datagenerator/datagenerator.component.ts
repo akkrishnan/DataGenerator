@@ -7,6 +7,7 @@ import {
   ErrorStateMatcher,
   MatPaginator,
   MatSort,
+  MatSnackBar,
   MatTableDataSource
 } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
@@ -14,7 +15,7 @@ import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs';
 import { take, startWith, map } from 'rxjs/operators';
 // import { CustomValidatorsService } from './custom-validators.service';
-
+import { DatageneratorService } from './datagenerator.service';
 
 export interface JsonFormat {
   name: string;
@@ -30,20 +31,28 @@ export interface JSONObject {
 @Component({
   selector: 'app-datagenerator',
   templateUrl: './datagenerator.component.html',
-  styleUrls: ['./datagenerator.component.scss']
+  styleUrls: ['./datagenerator.component.scss'],
+  providers: [
+    DatageneratorService
+  ]
 })
 export class DatageneratorComponent implements OnInit {
 
   formGroup: FormGroup;
   post: any = '';
+  durationInSeconds = 5;
+  successMessage = 'Successfully submitted the request form';
+  actionMessage = 'Success!';
+
   error: JSONObject[] = [
     { key: 'fileName', value: 'Enter file name without spaces. For eg., "NEWFILENAME01"' },
     { key: 'destination', value: 'Enter destination, you can provide your desktop location' },
     { key: 'noOfCols', value: 'Enter number of columns' },
     { key: 'noOfRows', value: 'Enter number of rows' },
-    { key: 'colDecimeter', value: 'Enter column decimeter' },
+    { key: 'colDelimeter', value: 'Enter column delimeter' },
     { key: 'attributeName', value: 'Enter attribute name' },
-    { key: 'dataName', value: 'Enter data name' },
+    // { key: 'dataName', value: 'Enter data name' },
+    { key: 'dataType', value: 'Enter data type' },
     { key: 'dataPattern', value: 'Enter data pattern' },
     { key: 'startingFrom', value: 'Enter starting from' },
     { key: 'endingTo', value: 'Enter ending to' },
@@ -58,7 +67,7 @@ export class DatageneratorComponent implements OnInit {
     { key: 'destination', value: 'Provide your desktop location' },
     { key: 'noOfCols', value: 'Enter valid number' },
     { key: 'noOfRows', value: 'Enter valid number' },
-    { key: 'colDecimeter', value: 'For eg. Comma (,) can be entered' }
+    { key: 'colDelimeter', value: 'For eg. Comma (,) can be entered' }
   ];
 
   projectNameList: JsonFormat[] = [
@@ -91,7 +100,9 @@ export class DatageneratorComponent implements OnInit {
   filterDataTypeList: Observable<JsonFormat[]>;
 
   constructor(
+    private service: DatageneratorService,
     private titleService: Title,
+    private snackBar: MatSnackBar,
     private eventEmitterService: EventEmitterService,
     private router: Router
   ) { }
@@ -100,7 +111,7 @@ export class DatageneratorComponent implements OnInit {
     this.createForm();
     this.setChangeValidate();
 
-    this.filterDataTypeList = this.formGroup.get('dataTypeControl')!.valueChanges
+    this.filterDataTypeList = this.formGroup.get('dataType')!.valueChanges
       .pipe(
         startWith(''),
         map(name => name ? this._filter(name) : this.dataTypeList.slice())
@@ -113,6 +124,12 @@ export class DatageneratorComponent implements OnInit {
     }
   }
 
+  showSuccessMessage(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: this.durationInSeconds * 1000,
+    });
+  }
+
   setTitle() {
     this.titleService.setTitle('Data Generator');
   }
@@ -121,20 +138,16 @@ export class DatageneratorComponent implements OnInit {
     this.router.navigate([urlString]);
   }
 
-  doLogout() {
-    this.navigateToHome('');
-  }
-
   createForm() {
     this.formGroup = new FormGroup({
       fileName: new FormControl('', [Validators.required]),
       destination: new FormControl('', [Validators.required]),
       noOfCols: new FormControl('', [Validators.required]),
       noOfRows: new FormControl('', [Validators.required]),
-      colDecimeter: new FormControl('', [Validators.required]),
+      colDelimeter: new FormControl('', [Validators.required]),
       attributeName: new FormControl('', [Validators.required]),
-      dataName: new FormControl('', [Validators.required]),
-      dataTypeControl: new FormControl('', [Validators.required]),
+      // dataName: new FormControl('', [Validators.required]),
+      dataType: new FormControl('', [Validators.required]),
       dataPattern: new FormControl('', [Validators.required]),
       startingFrom: new FormControl('', [Validators.required]),
       endingTo: new FormControl('', [Validators.required]),
@@ -195,16 +208,20 @@ export class DatageneratorComponent implements OnInit {
     return this.validateErrorMessage('noOfRows');
   }
 
-  validateDecimeter() {
-    return this.validateErrorMessage('colDecimeter');
+  validateDelimeter() {
+    return this.validateErrorMessage('colDelimeter');
   }
 
   validateAttributeName() {
     return this.validateErrorMessage('attributeName');
   }
 
-  validateDataName() {
-    return this.validateErrorMessage('dataName');
+  // validateDataName() {
+  //   return this.validateErrorMessage('dataName');
+  // }
+
+  validateDataType() {
+    return this.validateErrorMessage('dataType');
   }
 
   validateDataPattern() {
@@ -251,8 +268,8 @@ export class DatageneratorComponent implements OnInit {
     return this.getHintMessage('noOfRows');
   }
 
-  getColDecimeterHint() {
-    return this.getHintMessage('colDecimeter');
+  getColDelimeterHint() {
+    return this.getHintMessage('colDelimeter');
   }
 
   // triggerResize() {
@@ -269,8 +286,26 @@ export class DatageneratorComponent implements OnInit {
 
   onSubmit(post: any) {
     if (this.formGroup.valid) {
-      console.log("Form Submitted!");
+      // console.log("Form Submitted!");
       this.post = post;
+      this.service.postDataRequest(post).then(res => {
+        console.log('Form Submitted....');
+        // this.formGroup.reset();
+        this.generateDataRequest(post);
+        this.showSuccessMessage(this.successMessage, this.actionMessage);
+        this.doReload();
+      });
     }
   }
+
+  generateDataRequest(post: any) {
+    this.service.generateDataRequest(post).then(res => {
+      console.log('File Generated....');
+    });
+  }
+
+  doReload() {
+    this.navigateToHome('/datagen');
+  }
+
 }

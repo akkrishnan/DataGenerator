@@ -1,50 +1,51 @@
 <div style="text-align:center">
-    <ng-container *ngIf="true">
-        <div class="toolbar mat-elevation-z6 headerToolBar" role="banner">
-            <mat-toolbar color="primary">
-                <!-- <table width="100%">
+  <ng-container *ngIf="true">
+    <div class="toolbar mat-elevation-z6 headerToolBar" role="banner">
+      <mat-toolbar color="primary">
+        <!-- <table width="100%">
             <tr>
               <td width="100%" align="center"> -->
-                <div class="header-style">
-                    <h1>
-                        Welcome to {{title}}!
-                    </h1>
-                </div>
-                <div class="toolbar-logout" itemid="logoutButton">
-                    <button mat-raised-button color="secondary" matTooltip="Logout" (click)="doLogout()">Logout</button>
-                </div>
-                <!-- </td>
+        <div class="header-style">
+          <h1>
+            Hi {{loggedInUser}}!  Welcome to {{title}}
+          </h1>
+        </div>
+        <div class="toolbar-logout" itemid="logoutButton">
+          <button mat-raised-button color="secondary" matTooltip="Logout" (click)="doLogout()">Logout</button>
+        </div>
+        <!-- </td>
             </tr>
           </table> -->
-            </mat-toolbar>
-        </div>
-        <div class="mat-elevation-z6">
-            <mat-toolbar color="secondary">
-                <nav class="nav-toolbar">
-                    <button mat-raised-button matTooltip="Data Request Summary"
-                        (click)="navigateToHome('home')">Data Request Summary</button>&nbsp;&nbsp;
-                    <button mat-raised-button matTooltip="Create Request Form" (click)="navigateToHome('datagen')">Create Request Form</button>
-                    <!-- <button mat-raised-button matTooltip="Dashboard"
+      </mat-toolbar>
+    </div>
+    <div class="mat-elevation-z6">
+      <mat-toolbar color="secondary">
+        <nav class="nav-toolbar">
+          <button mat-raised-button matTooltip="Data Request Summary" (click)="navigateToHome('home')">Data Request
+            Summary</button>&nbsp;&nbsp;
+          <button mat-raised-button matTooltip="Create Request Form" (click)="navigateToHome('datagen')">Create Request
+            Form</button>
+          <!-- <button mat-raised-button matTooltip="Dashboard"
                         (click)="navigateToHome('dashboard')">Dashboard</button> -->
-                    <!-- <mat-tab-group>
+          <!-- <mat-tab-group>
               <mat-tab label="First"> First </mat-tab>
               <mat-tab label="Second"> Second </mat-tab>
               <mat-tab label="Third"> Third </mat-tab>
             </mat-tab-group> -->
 
-                    <!-- <a routerLink="home" routerLinkActive="active">Home</a>&nbsp; &nbsp;
+          <!-- <a routerLink="home" routerLinkActive="active">Home</a>&nbsp; &nbsp;
             <a routerLink="datagen">Data Gen</a>&nbsp; &nbsp;
             <a routerLink="dashboard">Dashboard</a> -->
 
-                    <!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button> 
+          <!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button> 
             <mat-menu #menu="matMenu">
               <button mat-menu-item>Item 1</button>
               <button mat-menu-item>Item 2</button>
             </mat-menu>
           -->
-                </nav>
-            </mat-toolbar>
-        </div>
-    </ng-container>
+        </nav>
+      </mat-toolbar>
+    </div>
+  </ng-container>
 
 </div>

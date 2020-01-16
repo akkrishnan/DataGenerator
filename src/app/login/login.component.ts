@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   loginErrMessage = 'Please enter the username';
   pwdErrMessage = 'Please enter the password';
 
-  loginpwdErrMessage = 'Please both username & password to login';
+  loginpwdErrMessage = 'Please enter both username & password to login';
 
   ngOnInit() {
     this.createLoginForm();

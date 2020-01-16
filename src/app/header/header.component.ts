@@ -8,6 +8,8 @@ import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
+  loggedInUser = 'KRISH';
+
   title = 'Data Generator Tool';
 
   constructor(
