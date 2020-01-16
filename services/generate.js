@@ -7,8 +7,12 @@ const fs = require('fs');
 const readFile = fs.readFile;
 const writeFile = fs.writeFile;
 const config = require('../config.js');
-const requestDataPath = config.requestDataPath;
-const outputCSVPath = config.outputCSVPath;
+
+const requestDataPath = './data/requestData.json';
+const outputCSVPath = './output/requestData.csv';
+
+// const requestDataPath = config.requestDataPath;
+// const outputCSVPath = config.outputCSVPath;
 
 generateCSVRouter.post('/', (req, res) => {
     readFile(requestDataPath, 'utf-8', (err, fileContent) => {

@@ -3,7 +3,8 @@ const express = require('express');
 const usersRouter = express.Router();
 const fs = require('fs');
 const config = require('../config.js');
-const topReqDataPath = config.topReqDataPath;
+const topReqDataPath = './data/toprequests.json';
+// const topReqDataPath = config.topReqDataPath;
 
 usersRouter.get('/', (req, res) => {
   fs.readFile(topReqDataPath, 'utf8', (err, data) => {

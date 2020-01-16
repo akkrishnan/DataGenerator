@@ -1,16 +1,1 @@
-{
-  "fileName": "demo006",
-  "destination": "d:\\",
-  "noOfCols": 1,
-  "noOfRows": 1,
-  "colDelimeter": ",",
-  "attributeName": "somename1",
-  "dataType": "Existing data backup",
-  "dataPattern": "NUMERIC",
-  "startingFrom": 1,
-  "endingTo": 1,
-  "startingLength": 1,
-  "endingLength": 1,
-  "fixedLength": 1,
-  "charactersFor": "t"
-}
+{"fileName":"filenewwwwww0000999","destination":"d:\\","noOfCols":1,"noOfRows":1,"colDelimeter":",","attributeName":"sdf","dataType":"Data with encrypted","dataPattern":"11","startingFrom":1,"endingTo":1,"startingLength":1,"endingLength":1,"fixedLength":1,"charactersFor":"sdf"}

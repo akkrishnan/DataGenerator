@@ -5,9 +5,10 @@ const fs = require('fs');
 const readFile = fs.readFile;
 const writeFile = fs.writeFile;
 const config = require('../config.js');
-
-const topReqDataPath = config.topReqDataPath;
-const requestDataPath = config.requestDataPath;
+const requestDataPath = './data/requestData.json';
+const topReqDataPath = './data/toprequests.json';
+// const topReqDataPath = config.topReqDataPath;
+// const requestDataPath = config.requestDataPath;
 const userId = 'KRISH';
 const successMessage = "Your request is successfully submitted";
 
