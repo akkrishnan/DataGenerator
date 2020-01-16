@@ -2,7 +2,6 @@ import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { EventEmitterService } from '../event-emitter.service';
 import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
-
 import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
 import {
   ErrorStateMatcher,
@@ -73,7 +72,7 @@ export class DatageneratorComponent implements OnInit {
     { name: 'Network Support', id: 'support' }
   ];
 
-  requestTypesList: JsonFormat[] = [
+  dataTypeList: JsonFormat[] = [
     { name: 'New data set', id: 'newData' },
     { name: 'Existing data backup', id: 'existingData' },
     { name: 'Data with masking', id: 'maskData' },
@@ -87,6 +86,10 @@ export class DatageneratorComponent implements OnInit {
     { name: 'Database', id: 'database' }
   ];
 
+  title = 'Data Generator';
+
+  filterDataTypeList: Observable<JsonFormat[]>;
+
   constructor(
     private titleService: Title,
     private eventEmitterService: EventEmitterService,
@@ -96,6 +99,12 @@ export class DatageneratorComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.setChangeValidate();
+
+    this.filterDataTypeList = this.formGroup.get('dataTypeControl')!.valueChanges
+      .pipe(
+        startWith(''),
+        map(name => name ? this._filter(name) : this.dataTypeList.slice())
+      );
 
     if (this.eventEmitterService.subsVar == undefined) {
       this.eventEmitterService.subsVar = this.eventEmitterService.invokeSetHomeTitle.subscribe((name: string) => {
@@ -125,6 +134,7 @@ export class DatageneratorComponent implements OnInit {
       colDecimeter: new FormControl('', [Validators.required]),
       attributeName: new FormControl('', [Validators.required]),
       dataName: new FormControl('', [Validators.required]),
+      dataTypeControl: new FormControl('', [Validators.required]),
       dataPattern: new FormControl('', [Validators.required]),
       startingFrom: new FormControl('', [Validators.required]),
       endingTo: new FormControl('', [Validators.required]),
@@ -135,12 +145,12 @@ export class DatageneratorComponent implements OnInit {
     });
   }
 
-  // private _filter(value: string): JsonFormat[] {
-  //   if (value) {
-  //     const filterValue = value.toLowerCase();
-  //     return this.projectNameList.filter(proj => proj.name.toLowerCase().indexOf(filterValue) === 0);
-  //   }
-  // }
+  private _filter(value: string): JsonFormat[] {
+    if (value) {
+      const filterValue = value.toLowerCase();
+      return this.dataTypeList.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
+    }
+  }
 
   setChangeValidate() {
   }
@@ -251,7 +261,16 @@ export class DatageneratorComponent implements OnInit {
   //     .subscribe(() => this.autosize.resizeToFitContent(true));
   // }
 
+  onReset() {
+    if (this.formGroup.valid) {
+      this.formGroup.reset();
+    }
+  }
+
   onSubmit(post: any) {
-    this.post = post;
+    if (this.formGroup.valid) {
+      console.log("Form Submitted!");
+      this.post = post;
+    }
   }
 }

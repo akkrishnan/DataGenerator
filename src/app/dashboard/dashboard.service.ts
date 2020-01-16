@@ -10,6 +10,7 @@ export class DashboardService {
   ) { }
 
   private url = './api/getTopRequests';
+  // private url = '../../data/toprequests.json';
 
   getList(): Promise<any> {
     const url = `${this.url}`;
