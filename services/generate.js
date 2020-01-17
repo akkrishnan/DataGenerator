@@ -9,7 +9,7 @@ const writeFile = fs.writeFile;
 const config = require('../config.js');
 
 const requestDataPath = './data/requestData.json';
-const outputCSVPath = './output/requestData.csv';
+const fileExtn = '.csv';
 
 // const requestDataPath = config.requestDataPath;
 // const outputCSVPath = config.outputCSVPath;
@@ -17,15 +17,24 @@ const outputCSVPath = './output/requestData.csv';
 generateCSVRouter.post('/', (req, res) => {
     readFile(requestDataPath, 'utf-8', (err, fileContent) => {
         if (err) {
-            console.log(err); 
+            console.log(err);
             throw new Error(err);
         }
+        console.log(fileContent);
+        const parsedData = JSON.parse(fileContent);
+        const fileNameSuffix = parsedData.requestId;
+        const givenFileName = parsedData.fileName;
+        var outputCSVPath = './output/RequestData';
+        outputCSVPath = outputCSVPath + '_' + givenFileName + '_' + fileNameSuffix + fileExtn;
+
+        console.log({ outputCSVPath});        
+
         const csvData = csvjson.toCSV(fileContent, {
             headers: 'key'
         });
         writeFile(outputCSVPath, csvData, (err) => {
             if (err) {
-                console.log(err); 
+                console.log(err);
                 throw new Error(err);
             }
             console.log('Success!');

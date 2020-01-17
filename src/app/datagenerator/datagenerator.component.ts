@@ -96,12 +96,10 @@ export class DatageneratorComponent implements OnInit {
   ];
 
   dataPatternList: JsonFormat[] = [
-    { name: 'ALPHABETIC', id: 'ALPHABETIC' },
-    { name: 'EMAILID', id: 'EMAILID' },
-    { name: 'DATETIMENOW', id: 'DATETIMENOW' },
-    { name: 'GENDER', id: 'GENDER' }
+    { name: 'RANDOM', id: 'RANDOM' },
+    { name: 'RANDOM-FIX-LEN', id: 'RANDOM-FIX-LEN' }
   ];
-
+  
   dataFormatList: JsonFormat[] = [
     { name: 'Flat file', id: 'flat' },
     { name: 'XML', id: 'xml' },
@@ -112,6 +110,7 @@ export class DatageneratorComponent implements OnInit {
   title = 'Data Generator';
 
   filterDataTypeList: Observable<JsonFormat[]>;
+  filterDataPatternList: Observable<JsonFormat[]>;
 
   constructor(
     private service: DatageneratorService,
@@ -128,8 +127,14 @@ export class DatageneratorComponent implements OnInit {
     this.filterDataTypeList = this.formGroup.get('dataType')!.valueChanges
       .pipe(
         startWith(''),
-        map(name => name ? this._filter(name) : this.dataTypeList.slice())
+        map(name => name ? this._filterDataType(name) : this.dataTypeList.slice())
       );
+
+    this.filterDataPatternList = this.formGroup.get('dataPattern')!.valueChanges
+    .pipe(
+      startWith(''),
+      map(name => name ? this._filterPattern(name) : this.dataPatternList.slice())
+    )
 
     if (this.eventEmitterService.subsVar == undefined) {
       this.eventEmitterService.subsVar = this.eventEmitterService.invokeSetHomeTitle.subscribe((name: string) => {
@@ -154,28 +159,36 @@ export class DatageneratorComponent implements OnInit {
 
   createForm() {
     this.formGroup = new FormGroup({
-      fileName: new FormControl('', [Validators.required]),
-      destination: new FormControl('', [Validators.required]),
-      noOfCols: new FormControl('', [Validators.required]),
-      noOfRows: new FormControl('', [Validators.required]),
-      colDelimeter: new FormControl('', [Validators.required]),
-      attributeName: new FormControl('', [Validators.required]),
+      requestId: new FormControl(''),
+      fileName: new FormControl(''),
+      destination: new FormControl(''),
+      noOfCols: new FormControl(''),
+      noOfRows: new FormControl(''),
+      colDelimeter: new FormControl(''),
+      attributeName: new FormControl(''),
       // dataName: new FormControl('', [Validators.required]),
-      dataType: new FormControl('', [Validators.required]),
-      dataPattern: new FormControl('', [Validators.required]),
-      startingFrom: new FormControl('', [Validators.required]),
-      endingTo: new FormControl('', [Validators.required]),
-      startingLength: new FormControl('', [Validators.required]),
-      endingLength: new FormControl('', [Validators.required]),
-      fixedLength: new FormControl('', [Validators.required]),
-      charactersFor: new FormControl('', [Validators.required])
+      dataType: new FormControl(''),
+      dataPattern: new FormControl(''),
+      startingFrom: new FormControl(''),
+      endingTo: new FormControl(''),
+      startingLength: new FormControl(''),
+      endingLength: new FormControl(''),
+      fixedLength: new FormControl(''),
+      charactersFor: new FormControl('')
     });
   }
 
-  private _filter(value: string): JsonFormat[] {
+  private _filterDataType(value: string): JsonFormat[] {
     if (value) {
       const filterValue = value.toLowerCase();
       return this.dataTypeList.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
+    }
+  }
+
+  private _filterPattern(value: string): JsonFormat[]{
+    if (value) {
+      const filterValue = value.toLowerCase();
+      return this.dataPatternList.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
     }
   }
 
@@ -199,72 +212,73 @@ export class DatageneratorComponent implements OnInit {
   }
 
   validateErrorMessage(param: string) {
-    return this.formGroup.get(param).hasError('required') ? this.returnMessage(param, false) : '';
+    const fieldValue = this.formGroup.get(param).value;
+    return fieldValue.length == 0 ? this.returnMessage(param, false) : '';
   }
 
   getHintMessage(param: string) {
     return this.returnMessage(param, true);
   }
 
-  validateFileName() {
-    return this.validateErrorMessage('fileName');
-  }
+  // validateFileName() {
+  //   return this.validateErrorMessage('fileName');
+  // }
 
-  validateDestination() {
-    return this.validateErrorMessage('destination');
-  }
+  // validateDestination() {
+  //   return this.validateErrorMessage('destination');
+  // }
 
-  validateNoOfCols() {
-    return this.validateErrorMessage('noOfCols');
-  }
+  // validateNoOfCols() {
+  //   return this.validateErrorMessage('noOfCols');
+  // }
 
-  validateNoOfRows() {
-    return this.validateErrorMessage('noOfRows');
-  }
+  // validateNoOfRows() {
+  //   return this.validateErrorMessage('noOfRows');
+  // }
 
-  validateDelimeter() {
-    return this.validateErrorMessage('colDelimeter');
-  }
+  // validateDelimeter() {
+  //   return this.validateErrorMessage('colDelimeter');
+  // }
 
-  validateAttributeName() {
-    return this.validateErrorMessage('attributeName');
-  }
+  // validateAttributeName() {
+  //   return this.validateErrorMessage('attributeName');
+  // }
 
   // validateDataName() {
   //   return this.validateErrorMessage('dataName');
   // }
 
-  validateDataType() {
-    return this.validateErrorMessage('dataType');
-  }
+  // validateDataType() {
+  //   return this.validateErrorMessage('dataType');
+  // }
 
-  validateDataPattern() {
-    return this.validateErrorMessage('dataPattern');
-  }
+  // validateDataPattern() {
+  //   return this.validateErrorMessage('dataPattern');
+  // }
 
-  validateStartingFrom() {
-    return this.validateErrorMessage('startingFrom');
-  }
+  // validateStartingFrom() {
+  //   return this.validateErrorMessage('startingFrom');
+  // }
 
-  validateEndingTo() {
-    return this.validateErrorMessage('endingTo');
-  }
+  // validateEndingTo() {
+  //   return this.validateErrorMessage('endingTo');
+  // }
 
-  validateStartingLen() {
-    return this.validateErrorMessage('startingLength');
-  }
+  // validateStartingLen() {
+  //   return this.validateErrorMessage('startingLength');
+  // }
 
-  validateEndingLen() {
-    return this.validateErrorMessage('endingLength');
-  }
+  // validateEndingLen() {
+  //   return this.validateErrorMessage('endingLength');
+  // }
 
-  validateFixedLen() {
-    return this.validateErrorMessage('fixedLength');
-  }
+  // validateFixedLen() {
+  //   return this.validateErrorMessage('fixedLength');
+  // }
 
-  validateCharactersFor() {
-    return this.validateErrorMessage('charactersFor');
-  }
+  // validateCharactersFor() {
+  //   return this.validateErrorMessage('charactersFor');
+  // }
 
   getFileNameHint() {
     return this.getHintMessage('fileName');

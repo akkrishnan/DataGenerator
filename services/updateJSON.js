@@ -31,8 +31,8 @@ updateJSONRouter.post('/', (req, res) => {
       color: 'lime'
     };
     parsedData.unshift(newRecord);
-    console.log('=============== FINAL JSON ==============');
-    console.log(parsedData);
+    
+    // console.log(parsedData);
     // res.send(JSON.parse(data));
     writeFile(topReqDataPath, JSON.stringify(parsedData), (err) => {
       if (err) {
@@ -41,6 +41,10 @@ updateJSONRouter.post('/', (req, res) => {
       }
       console.log('Successfully updated the Top Requests JSON!');
     });
+
+    console.log('=============== sourceData ==============');
+
+    sourceData.requestId = newId;
 
     console.log(sourceData);
 

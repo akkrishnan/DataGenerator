@@ -20,8 +20,8 @@ app.use(bodyParser.urlencoded({
 //Put your angular dist folder here
 app.use(express.static(path.join(__dirname, './dist/DataGenerator')));
 app.use('/login', express.static(path.join(__dirname, './dist/DataGenerator')));
-// app.use('/home', express.static(path.join(__dirname, './dist/DataGenerator')));
-// app.use('/datagen', express.static(path.join(__dirname, './dist/DataGenerator')));
+app.use('/home', express.static(path.join(__dirname, './dist/DataGenerator')));
+app.use('/datagen', express.static(path.join(__dirname, './dist/DataGenerator')));
 app.use('/api', routes);
 app.use('/api/userContext', userContextRoutes.postUserContext);
 app.use('/api/getUserContext', userContextRoutes.getUserContext);
