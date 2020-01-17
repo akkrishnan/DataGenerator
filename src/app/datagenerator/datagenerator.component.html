@@ -1,90 +1,104 @@
 <app-header></app-header>
-<div class="app-form-container" >
+<div class="app-form-container">
     <!-- *ngIf="!post; else forminfo" novalidate -->
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
         <div align="left" class="app-form-container-div">
-            <mat-card>
+            <mat-card class="mat-card mat-elevation-z3">
                 <mat-card-content>
-                    <div align="center">
-                        <mat-card class="cardWidth">
-                            <mat-card-header align="left">
-                                <mat-card-title>Create Request Form</mat-card-title>
-                                <mat-card-subtitle>Fill the below fields to generate data
-                                </mat-card-subtitle>
-                            </mat-card-header>
-                            <mat-card-content>
-                                <div>
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>File Name</mat-label>
-                                        <input type="text" matInput formControlName="fileName" autocomplete="off"
-                                            placeholder="File Name" required>
-                                        <mat-error *ngIf="formGroup.controls['fileName'].invalid">{{validateFileName()}}
-                                        </mat-error>
-                                        <mat-hint>{{getFileNameHint()}}</mat-hint>
-                                    </mat-form-field>
-                                </div>
-                                <div>
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Destination</mat-label>
-                                        <input type="text" matInput formControlName="destination" autocomplete="off"
-                                            placeholder="Destination Path" required>
-                                        <mat-error *ngIf="formGroup.controls['destination'].invalid">
-                                            {{ validateDestination() }}</mat-error>
-                                        <mat-hint>{{getDestinationHint()}}</mat-hint>
-                                    </mat-form-field>
-                                </div>
-
-                                <div>
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>No. Of Columns</mat-label>
-                                        <input type="number" matInput formControlName="noOfCols" autocomplete="off"
-                                            placeholder="Number of Columns" required>
-                                        <mat-error *ngIf="formGroup.controls['noOfCols'].invalid">
-                                            {{ validateNoOfCols() }}</mat-error>
-                                        <mat-hint>{{getNoOfColsHint()}}</mat-hint>
-                                    </mat-form-field>
-                                </div>
-
-                                <div>
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>No. Of Rows</mat-label>
-                                        <input type="number" matInput formControlName="noOfRows" autocomplete="off"
-                                            placeholder="Number of Rows" required>
-                                        <mat-error *ngIf="formGroup.controls['noOfRows'].invalid">
-                                            {{ validateNoOfRows() }}</mat-error>
-                                        <mat-hint>{{getNoOfRowsHint()}}</mat-hint>
-                                    </mat-form-field>
-                                </div>
-
-                                <div>
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Enter Column Delimeter</mat-label>
-                                        <input matInput formControlName="colDelimeter" autocomplete="off"
-                                            placeholder="Enter Column colDelimeter" required>
-                                        <mat-error *ngIf="formGroup.controls['colDelimeter'].invalid">
-                                            {{ validateDelimeter() }}</mat-error>
-                                        <mat-hint>{{getColDelimeterHint()}}</mat-hint>
-                                    </mat-form-field>
-                                </div>
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-
-                    <div align="center" style="margin-top:20px;">
+                    <div align="left">
                         <table border="0">
                             <tr>
                                 <td class="vAlignTop">
-                                    <mat-card class="attributeCardWidth">
+                                    <mat-card class="req-form-card-width">
+                                        <mat-card-header align="left">
+                                            <mat-card-title>Request Form</mat-card-title>
+                                            <mat-card-subtitle>Please fill all the below fields to generate data
+                                            </mat-card-subtitle>
+                                        </mat-card-header>
+                                        <mat-card-content class="mat-card-content req-form-content">
+                                            <div>
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>File Name</mat-label>
+                                                    <input type="text" matInput formControlName="fileName"
+                                                        autocomplete="off" placeholder="File Name" required>
+                                                    <mat-error *ngIf="formGroup.controls['fileName'].invalid">
+                                                        {{validateFileName()}}
+                                                    </mat-error>
+                                                    <mat-hint>{{getFileNameHint()}}</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div>
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Destination</mat-label>
+                                                    <input type="text" matInput formControlName="destination"
+                                                        autocomplete="off" placeholder="Destination Path" required
+                                                        value="C:\Users\Public\Desktop">
+                                                    <mat-error *ngIf="formGroup.controls['destination'].invalid">
+                                                        {{ validateDestination() }}</mat-error>
+                                                    <mat-hint>{{getDestinationHint()}}</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div>
+                                                <table class="req-form-content-table" border="0" cellpadding="0"
+                                                    cellspacing="0">
+                                                    <tr>
+                                                        <td class="double-card">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>No. Of Columns</mat-label>
+                                                                <input type="number" matInput formControlName="noOfCols"
+                                                                    autocomplete="off" placeholder="Number of Columns"
+                                                                    required value="1">
+                                                                <mat-error
+                                                                    *ngIf="formGroup.controls['noOfCols'].invalid">
+                                                                    {{ validateNoOfCols() }}</mat-error>
+                                                                <mat-hint>{{getNoOfColsHint()}}</mat-hint>
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td width="10"></td>
+                                                        <td class="double-card">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>No. Of Rows</mat-label>
+                                                                <input type="number" matInput formControlName="noOfRows"
+                                                                    autocomplete="off" placeholder="Number of Rows"
+                                                                    required value="1">
+                                                                <mat-error
+                                                                    *ngIf="formGroup.controls['noOfRows'].invalid">
+                                                                    {{ validateNoOfRows() }}</mat-error>
+                                                                <mat-hint>{{getNoOfRowsHint()}}</mat-hint>
+                                                            </mat-form-field>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+
+                                            <div>
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Enter Column Delimeter</mat-label>
+                                                    <input matInput formControlName="colDelimeter" autocomplete="off"
+                                                        placeholder="Enter Column colDelimeter" required value=",">
+                                                    <mat-error *ngIf="formGroup.controls['colDelimeter'].invalid">
+                                                        {{ validateDelimeter() }}</mat-error>
+                                                    <mat-hint>{{getColDelimeterHint()}}</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </td>
+                                <td width="10"></td>
+                                <td class="vAlignTop">
+                                    <mat-card class="length-card-width">
                                         <mat-card-header align="left">
                                             <mat-card-title>Attributes</mat-card-title>
                                             <!-- <mat-card-subtitle>Please select any options below</mat-card-subtitle> -->
                                         </mat-card-header>
-                                        <mat-card-content class="mat-card-content attributeContentStyle">
+                                        <mat-card-content class="mat-card-content length-content-style">
                                             <div>
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Attribute Name</mat-label>
-                                                    <input matInput formControlName="attributeName"
-                                                        autocomplete="off" placeholder="Enter Attribute Name">
+                                                    <input matInput formControlName="attributeName" autocomplete="off"
+                                                        placeholder="Enter Attribute Name">
                                                     <mat-error *ngIf="formGroup.controls['attributeName'].invalid">
                                                         {{ validateAttributeName() }}
                                                     </mat-error>
@@ -92,15 +106,15 @@
                                             </div>
 
                                             <!-- <div>
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Data Name</mat-label>
-                                                    <input matInput formControlName="dataName" autocomplete="off"
-                                                        placeholder="Enter Data Name">
-                                                    <mat-error *ngIf="formGroup.controls['dataName'].invalid">
-                                                        {{ validateDataName() }}
-                                                    </mat-error>
-                                                </mat-form-field>
-                                            </div> -->
+                                                                        <mat-form-field appearance="outline">
+                                                                            <mat-label>Data Name</mat-label>
+                                                                            <input matInput formControlName="dataName" autocomplete="off"
+                                                                                placeholder="Enter Data Name">
+                                                                            <mat-error *ngIf="formGroup.controls['dataName'].invalid">
+                                                                                {{ validateDataName() }}
+                                                                            </mat-error>
+                                                                        </mat-form-field>
+                                                                    </div> -->
 
                                             <div>
                                                 <mat-form-field appearance="outline">
@@ -111,16 +125,16 @@
                                                     <mat-autocomplete #auto="matAutocomplete">
                                                         <mat-option *ngFor="let item of filterDataTypeList | async"
                                                             [value]="item.name">
-                                                        <span>{{item.name}}</span>
+                                                            <span>{{item.name}}</span>
                                                         </mat-option>
                                                     </mat-autocomplete>
                                                     <mat-error *ngIf="formGroup.controls['dataType'].invalid">
                                                         {{ validateDataType() }}
                                                     </mat-error>
                                                     <!-- <mat-error
-                                                        *ngIf="formGroup.controls['dataType'].hasError('required')">
-                                                        Please select data type
-                                                    </mat-error> -->
+                                                                                *ngIf="formGroup.controls['dataType'].hasError('required')">
+                                                                                Please select data type
+                                                                            </mat-error> -->
                                                     <!-- <mat-hint>{{requestTypeControl.value?.id}}</mat-hint> -->
                                                 </mat-form-field>
                                             </div>
@@ -182,27 +196,26 @@
                                             </div>
 
                                             <div>
-                                                <table class="attributeTripleCardWidth" border="0" cellpadding="0"
-                                                    cellspacing="0">
+                                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                                     <tr>
-                                                        <td class="tipleCardWidth vAlignTop">
+                                                        <td class="length-triple-card vAlignTop">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Starting Length</mat-label>
                                                                 <input type="number" matInput
                                                                     formControlName="startingLength" autocomplete="off"
-                                                                    placeholder="Starting Length">
+                                                                    placeholder="Starting Length" value="1">
                                                                 <mat-error
                                                                     *ngIf="formGroup.controls['startingLength'].invalid">
                                                                     {{ validateStartingLen() }}</mat-error>
                                                             </mat-form-field>
                                                         </td>
                                                         <td width="10"></td>
-                                                        <td class="tipleCardWidth vAlignTop">
+                                                        <td class="length-triple-card vAlignTop">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Ending Length</mat-label>
                                                                 <input type="number" matInput
                                                                     formControlName="endingLength" autocomplete="off"
-                                                                    placeholder="Ending Length">
+                                                                    placeholder="Ending Length" value="1">
                                                                 <mat-error
                                                                     *ngIf="formGroup.controls['endingLength'].invalid">
                                                                     {{ validateEndingLen() }}
@@ -210,7 +223,7 @@
                                                             </mat-form-field>
                                                         </td>
                                                         <td width="10"></td>
-                                                        <td class="tipleCardWidth vAlignTop">
+                                                        <td class="length-triple-card vAlignTop">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Fixed Length</mat-label>
                                                                 <input type="number" matInput
@@ -243,7 +256,6 @@
                                 </td>
                             </tr>
                         </table>
-
                     </div>
 
                 </mat-card-content>
@@ -254,9 +266,11 @@
             <mat-card class="generate-style">
                 <mat-card-content>
                     <p>
-                        <button mat-raised-button color="primary" matTooltip="Generate the data">Generate</button>&nbsp;&nbsp;
-                        <button mat-raised-button color="secondary" matTooltip="Reset the form" (click)="onReset()">Reset</button>
-                        
+                        <button mat-raised-button color="primary"
+                            matTooltip="Generate the data">Generate</button>&nbsp;&nbsp;
+                        <button mat-raised-button color="secondary" matTooltip="Reset the form"
+                            (click)="onReset()">Reset</button>
+
                         <!-- &nbsp; &nbsp;
     <button mat-raised-button matTooltip="Cancel and Discard changes">Cancel</button> -->
                     </p>

@@ -1,10 +1,22 @@
-$fieldWidth: 400px;
-$cardWidth: 700px;
+$fieldWidth: 300px;
+$cardWidth: 300px;
 $redColor: red;
-$smallCardWidth: 185px;
-$tripleCardWidth: 120px;
-$attributeContentStyleWidth: 375px;
-$appFormContainerDiv: 430px;
+$smallCardWidth: 160px;
+
+
+$triple-card-width: 105px;
+
+$double-card-width : 195px;
+
+$req-form-content-width : 400px;
+
+$attributeContentStyleWidth: 325px;
+
+$length-card-width:350px;
+
+$app-form-height: 420px;
+$content-font-size: 12px;
+$header-font-size: 16px;
 
 .mat-card {
   padding: 10px !important;
@@ -26,7 +38,42 @@ $appFormContainerDiv: 430px;
     input[type=number] {
       -moz-appearance: textfield;
     }
+
+    .mat-card-header-text {
+      margin: 0px !important;
+    }
+
+    .mat-form-field {
+      line-height: inherit;
+    }
+
+    .mat-card-header .mat-card-title {
+      font-size: $header-font-size;
+      margin-bottom: 8px;
+    }
+
+    .mat-card-content {
+      font-size: $content-font-size;
+    }
+
+    .mat-form-field-subscript-wrapper {
+      font-size: 85%;
+    }
+
+    .mat-card-subtitle {
+      font-size: 10px;
+      margin-bottom: 5px;
+    }
+
+    .mat-card-header .mat-card-subtitle:not(:first-child) {
+      margin-top: -8px;
+    }
+
+
   }
+
+
+
 
   ::ng-content .toolbar-logout {
     .mat-raised-button {
@@ -40,7 +87,7 @@ $appFormContainerDiv: 430px;
 
   .app-form-container-div {
     margin-top: 10px;
-    height: $appFormContainerDiv;
+    height: $app-form-height;
     overflow-y: auto;
   }
 
@@ -61,6 +108,16 @@ $appFormContainerDiv: 430px;
     width: $cardWidth;
   }
 
+  ::ng-deep .req-form-content {
+    .mat-form-field-wrapper {
+      width: $req-form-content-width !important;
+    }
+  }
+
+  .req-form-card-width {
+    width: $req-form-content-width;
+  }
+
   ::ng-deep .attributeContentStyle {
     .mat-form-field-wrapper {
       width: $attributeContentStyleWidth !important;
@@ -69,6 +126,16 @@ $appFormContainerDiv: 430px;
 
   .attributeCardWidth {
     width: $attributeContentStyleWidth;
+  }
+
+  ::ng-deep .length-content-style {
+    .mat-form-field-wrapper {
+      width: $length-card-width !important;
+    }
+  }
+
+  .length-card-width {
+    width: $length-card-width;
   }
 
   ::ng-deep .attributeCardShortWidth {
@@ -87,20 +154,40 @@ $appFormContainerDiv: 430px;
     width: $smallCardWidth;
   }
 
-  ::ng-deep .attributeTripleCardWidth {
+  ::ng-deep .length-triple-card {
     .mat-form-field-wrapper {
-      width: $tripleCardWidth !important;
+      width: $triple-card-width !important;
     }
   }
 
-  ::ng-deep .attributeTripleCardWidth {
+  ::ng-deep .length-triple-card {
     ::ng-deep .mat-form-field {
-      width: $tripleCardWidth !important;
+      width: $triple-card-width !important;
     }
   }
 
-  .tripleCardWidth {
-    width: $tripleCardWidth;
+  
+
+  ::ng-deep .req-form-content-table {
+    .mat-form-field-wrapper {
+      width: $double-card-width !important;
+    }
   }
 
+  ::ng-deep .req-form-content-table {
+    ::ng-deep .mat-form-field {
+      width: $double-card-width !important;
+    }
+  }
+
+  .double-card{
+    width: $double-card-width;
+  }
+
+}
+
+.mat-option {
+  font-size: $content-font-size !important;
+  line-height: 40px !important;
+  height: 40px !important;
 }

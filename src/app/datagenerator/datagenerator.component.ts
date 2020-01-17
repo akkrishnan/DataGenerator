@@ -47,26 +47,26 @@ export class DatageneratorComponent implements OnInit {
   error: JSONObject[] = [
     { key: 'fileName', value: 'Enter file name without spaces. For eg., "NEWFILENAME01"' },
     { key: 'destination', value: 'Enter destination, you can provide your desktop location' },
-    { key: 'noOfCols', value: 'Enter number of columns' },
-    { key: 'noOfRows', value: 'Enter number of rows' },
+    { key: 'noOfCols', value: 'Enter a number' },
+    { key: 'noOfRows', value: 'Enter a number' },
     { key: 'colDelimeter', value: 'Enter column delimeter' },
     { key: 'attributeName', value: 'Enter attribute name' },
     // { key: 'dataName', value: 'Enter data name' },
     { key: 'dataType', value: 'Enter data type' },
     { key: 'dataPattern', value: 'Enter data pattern' },
-    { key: 'startingFrom', value: 'Enter starting from' },
-    { key: 'endingTo', value: 'Enter ending to' },
-    { key: 'startingLength', value: 'Enter starting length' },
-    { key: 'endingLength', value: 'Enter ending length' },
-    { key: 'fixedLength', value: 'Enter number' },
+    { key: 'startingFrom', value: 'Enter a number' },
+    { key: 'endingTo', value: 'Enter a number' },
+    { key: 'startingLength', value: 'Enter a number' },
+    { key: 'endingLength', value: 'Enter a number' },
+    { key: 'fixedLength', value: 'Enter a number' },
     { key: 'charactersFor', value: 'Enter some characters' }
   ];
 
   hint: JSONObject[] = [
     { key: 'fileName', value: 'Enter any file name. For eg., "NEWFILENAME01"' },
     { key: 'destination', value: 'Provide your desktop location' },
-    { key: 'noOfCols', value: 'Enter valid number' },
-    { key: 'noOfRows', value: 'Enter valid number' },
+    { key: 'noOfCols', value: 'Enter number of columns' },
+    { key: 'noOfRows', value: 'Enter number of rows' },
     { key: 'colDelimeter', value: 'For eg. Comma (,) can be entered' }
   ];
 
@@ -81,11 +81,25 @@ export class DatageneratorComponent implements OnInit {
     { name: 'Network Support', id: 'support' }
   ];
 
-  dataTypeList: JsonFormat[] = [
+  /* dataTypeList: JsonFormat[] = [
     { name: 'New data set', id: 'newData' },
     { name: 'Existing data backup', id: 'existingData' },
     { name: 'Data with masking', id: 'maskData' },
     { name: 'Data with encrypted', id: 'encryptedData' }
+  ]; */
+
+  dataTypeList: JsonFormat[] = [
+    { name: 'ALPHABETIC', id: 'ALPHABETIC' },
+    { name: 'EMAILID', id: 'EMAILID' },
+    { name: 'DATETIMENOW', id: 'DATETIMENOW' },
+    { name: 'GENDER', id: 'GENDER' }
+  ];
+
+  dataPatternList: JsonFormat[] = [
+    { name: 'ALPHABETIC', id: 'ALPHABETIC' },
+    { name: 'EMAILID', id: 'EMAILID' },
+    { name: 'DATETIMENOW', id: 'DATETIMENOW' },
+    { name: 'GENDER', id: 'GENDER' }
   ];
 
   dataFormatList: JsonFormat[] = [
