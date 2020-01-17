@@ -14,6 +14,8 @@ $attributeContentStyleWidth: 325px;
 
 $length-card-width:350px;
 
+$mat-card-height : 310px;
+
 $app-form-height: 420px;
 $content-font-size: 12px;
 $header-font-size: 16px;
@@ -110,32 +112,35 @@ $header-font-size: 16px;
 
   ::ng-deep .req-form-content {
     .mat-form-field-wrapper {
-      width: $req-form-content-width !important;
+      width: $req-form-content-width;
     }
   }
 
   .req-form-card-width {
     width: $req-form-content-width;
+    height: $mat-card-height;
   }
 
   ::ng-deep .attributeContentStyle {
     .mat-form-field-wrapper {
-      width: $attributeContentStyleWidth !important;
+      width: $attributeContentStyleWidth;
     }
   }
 
   .attributeCardWidth {
     width: $attributeContentStyleWidth;
+    height: $mat-card-height;
   }
 
   ::ng-deep .length-content-style {
     .mat-form-field-wrapper {
-      width: $length-card-width !important;
+      width: $length-card-width;
     }
   }
 
   .length-card-width {
     width: $length-card-width;
+    height: $mat-card-height;
   }
 
   ::ng-deep .attributeCardShortWidth {
@@ -166,7 +171,7 @@ $header-font-size: 16px;
     }
   }
 
-  
+
 
   ::ng-deep .req-form-content-table {
     .mat-form-field-wrapper {
@@ -180,7 +185,7 @@ $header-font-size: 16px;
     }
   }
 
-  .double-card{
+  .double-card {
     width: $double-card-width;
   }
 
@@ -190,4 +195,8 @@ $header-font-size: 16px;
   font-size: $content-font-size !important;
   line-height: 40px !important;
   height: 40px !important;
+}
+
+.mat-button-wrapper {
+  color: mediumspringgreen;
 }

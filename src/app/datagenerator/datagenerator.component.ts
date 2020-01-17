@@ -159,7 +159,6 @@ export class DatageneratorComponent implements OnInit {
 
   createForm() {
     this.formGroup = new FormGroup({
-      requestId: new FormControl(''),
       fileName: new FormControl(''),
       destination: new FormControl(''),
       noOfCols: new FormControl(''),
@@ -315,6 +314,7 @@ export class DatageneratorComponent implements OnInit {
   onSubmit(post: any) {
     if (this.formGroup.valid) {
       // console.log("Form Submitted!");
+      post.requestId = 0;
       this.post = post;
       this.service.postDataRequest(post).then(res => {
         console.log('Form Submitted....');

@@ -7,7 +7,8 @@ const fs = require('fs');
 const readFile = fs.readFile;
 const writeFile = fs.writeFile;
 const config = require('../config.js');
-
+const successMessage = "CSV file is successfully generated";
+const errorMessage = "Technical difficulties exception. Please try again!";
 const requestDataPath = './data/requestData.json';
 const fileExtn = '.csv';
 
@@ -38,8 +39,11 @@ generateCSVRouter.post('/', (req, res) => {
                 throw new Error(err);
             }
             console.log('Success!');
+            res.send({
+                success: true,
+                message: successMessage
+            });
         });
     });
-    // res.send('Success!');
 });
 module.exports = generateCSVRouter;
