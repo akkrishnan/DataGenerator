@@ -1,16 +1,21 @@
-import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material';
 // import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Observable } from 'rxjs';
 import { take, startWith, map } from 'rxjs/operators';
 // import { CustomValidatorsService } from './custom-validators.service';
 
+import { LoginService } from './login.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [
+    LoginService
+  ]
 })
 export class LoginComponent implements OnInit {
 
@@ -19,8 +24,11 @@ export class LoginComponent implements OnInit {
 
   loginErrorFlag = false;
 
-  loginFormGroup: FormGroup;
   post: any = '';
+
+  // userName = '';
+
+  loginFormGroup: FormGroup;
 
   loginErrMessage = 'Please enter the username';
   pwdErrMessage = 'Please enter the password';
@@ -29,11 +37,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.createLoginForm();
+
+
   }
 
   constructor(
+    private service: LoginService,
     private router: Router
   ) { }
+
 
   createLoginForm() {
     this.loginFormGroup = new FormGroup({
@@ -58,19 +70,36 @@ export class LoginComponent implements OnInit {
     return errorFlag ? this.pwdErrMessage : '';
   }
 
-  onSubmit() {
-    if (!this.validateLoginFields()) {
-      this.router.navigate(['/home']);
-    }
+  onSubmit(post: any) {
+
+    // this.userName = this.loginFormGroup.get('loginText').value;
+
+    this.post = {
+      userName: this.loginFormGroup.get('loginText').value,
+      password: this.loginFormGroup.get('passwordText').value,
+      language: 'en'
+    };
+    // console.log(post);
+    // console.log(this.post);
+
+    this.service.postUserContext(this.post).then(res => {
+      console.log('Logged in successfully...');
+      console.log(res);
+      if (!this.validateLoginFields()) {
+        this.router.navigate(['/home']);
+      }
+    });
+
+
   }
 
-  validateLoginFields(){
+  validateLoginFields() {
     this.loginErrorFlag = (this.validateTextField('loginText') || this.validateTextField('passwordText'));
     return this.loginErrorFlag;
   }
 
-  validateErrorMessage(){
+  validateErrorMessage() {
     this.loginErrorFlag = (this.validateTextField('loginText') || this.validateTextField('passwordText'));
   }
-  
+
 }
