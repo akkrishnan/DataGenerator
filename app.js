@@ -25,6 +25,7 @@ app.use('/datagen', express.static(path.join(__dirname, './dist/DataGenerator'))
 app.use('/api', routes);
 app.use('/api/userContext', userContextRoutes.postUserContext);
 app.use('/api/getUserContext', userContextRoutes.getUserContext);
+app.use('/api/getUserID', userContextRoutes.getUserID);
 app.use('/api/getTopRequests', topRequestRoutes);
 app.use('/api/savedatarequest', updateJSONRoutes);
 app.use('/api/generatedatarequest', generateCSVRoutes);

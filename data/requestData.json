@@ -1,17 +1,1 @@
-{
-    "fileName": "testnew",
-    "destination": "",
-    "noOfCols": "",
-    "noOfRows": "",
-    "colDelimeter": "",
-    "attributeName": "attr",
-    "dataType": "ALPHABETIC",
-    "dataPattern": "RANDOM",
-    "startingFrom": "",
-    "endingTo": "",
-    "startingLength": "",
-    "endingLength": "",
-    "fixedLength": "",
-    "charactersFor": "1",
-    "requestId": 10375
-}
+{"fileName":"UUU","destination":"","noOfCols":"","noOfRows":"","colDelimeter":"","attributeName":"dfg","dataType":"EMAILID","dataPattern":"RANDOM","startingFrom":"","endingTo":"","startingLength":"","endingLength":"","fixedLength":"","charactersFor":"","requestId":10412,"userId":"KrishNew"}

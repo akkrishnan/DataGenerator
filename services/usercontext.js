@@ -2,8 +2,10 @@
 const express = require('express');
 const postUserContext = express.Router();
 const getUserContext = express.Router();
+const getUserID = express.Router();
 const fs = require('fs');
 const writeFile = fs.writeFile;
+const readFile = fs.readFile;
 const config = require('../config.js');
 const util = require('./util.js');
 const userContextDataPath = './data/usercontext.json';
@@ -34,17 +36,30 @@ postUserContext.post('/', (req, res) => {
 });
 
 getUserContext.get('/', (req, res) => {
-    fs.readFile(userContextDataPath, 'utf8', (err, data) => {
+    readFile(userContextDataPath, 'utf8', (err, data) => {
         if (err) {
             throw err;
         }
-        // const userDetails = JSON.parse(data).userDetails;
-        // const userName = userDetails.userName;
         res.send(JSON.parse(data));
     });
 });
 
+
+getUserID.get('/', (req, res) => {
+    readFile(userContextDataPath, 'utf8', (err, data) => {
+        if (err) {
+            throw err;
+        }
+        const userDetails = JSON.parse(data).userDetails;
+        const responseData = {
+            userName: util.decrypt(userDetails.userName)
+        }
+        res.send(responseData);
+    });
+});
+
 module.exports = {
-    postUserContext: postUserContext,
-    getUserContext: getUserContext
+    postUserContext,
+    getUserContext,
+    getUserID
 };

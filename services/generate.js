@@ -21,12 +21,18 @@ generateCSVRouter.post('/', (req, res) => {
             console.log(err);
             throw new Error(err);
         }
+        console.log('============== fileContent =============');
         console.log(fileContent);
+        console.log('============== fileContent =============');
         const parsedData = JSON.parse(fileContent);
+        console.log('============== parsedData =============');
+        console.log(parsedData);
+        console.log('============== parsedData =============');
+
         const fileNameSuffix = parsedData.requestId;
         const givenFileName = parsedData.fileName;
-        var outputCSVPath = './output/RequestData';
-        outputCSVPath = outputCSVPath + '_' + givenFileName + '_' + fileNameSuffix + fileExtn;
+        var outputCSVPath = './output/RequestForm_';
+        outputCSVPath = outputCSVPath + givenFileName + '_' + fileNameSuffix + fileExtn;
 
         console.log({ outputCSVPath});        
 

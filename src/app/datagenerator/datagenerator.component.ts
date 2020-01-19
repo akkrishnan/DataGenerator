@@ -99,7 +99,7 @@ export class DatageneratorComponent implements OnInit {
     { name: 'RANDOM', id: 'RANDOM' },
     { name: 'RANDOM-FIX-LEN', id: 'RANDOM-FIX-LEN' }
   ];
-  
+
   dataFormatList: JsonFormat[] = [
     { name: 'Flat file', id: 'flat' },
     { name: 'XML', id: 'xml' },
@@ -131,10 +131,10 @@ export class DatageneratorComponent implements OnInit {
       );
 
     this.filterDataPatternList = this.formGroup.get('dataPattern')!.valueChanges
-    .pipe(
-      startWith(''),
-      map(name => name ? this._filterPattern(name) : this.dataPatternList.slice())
-    )
+      .pipe(
+        startWith(''),
+        map(name => name ? this._filterPattern(name) : this.dataPatternList.slice())
+      )
 
     if (this.eventEmitterService.subsVar === undefined) {
       this.eventEmitterService.subsVar = this.eventEmitterService.invokeSetHomeTitle.subscribe((name: string) => {
@@ -184,7 +184,7 @@ export class DatageneratorComponent implements OnInit {
     }
   }
 
-  private _filterPattern(value: string): JsonFormat[]{
+  private _filterPattern(value: string): JsonFormat[] {
     if (value) {
       const filterValue = value.toLowerCase();
       return this.dataPatternList.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
@@ -315,13 +315,19 @@ export class DatageneratorComponent implements OnInit {
     if (this.formGroup.valid) {
       // console.log("Form Submitted!");
       post.requestId = 0;
-      this.post = post;
-      this.service.postDataRequest(post).then(res => {
-        console.log('Form Submitted....');
-        // this.formGroup.reset();
-        this.generateDataRequest(post);
-        this.showSuccessMessage(this.successMessage, this.actionMessage);
-        this.doReload();
+      this.service.getUserID().then(res => {
+        console.log('========== res ===================');
+        console.log(res.userName);
+        console.log('========== res ===================');
+        post.userId = res.userName;
+        this.post = post;
+        this.service.postDataRequest(post).then(res => {
+          console.log('Form Submitted....');
+          // this.formGroup.reset();
+          this.generateDataRequest(post);
+          this.showSuccessMessage(this.successMessage, this.actionMessage);
+          this.doReload();
+        });
       });
     }
   }

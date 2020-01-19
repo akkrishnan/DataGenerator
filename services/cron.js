@@ -1,10 +1,10 @@
 /*jshint esversion: 6 */
 const cron = require('cron');
 const path = require('path');
-const express = require("express");
+const express = require('express');
 const http = require('http');
 const request = require('request');
-const fs = require("fs");
+const fs = require('fs');
 const directoryPath = path.join(__dirname, '../output');
 
 // app = express();
@@ -31,11 +31,11 @@ function getAllFiles() {
 
 
 function doRequest(url) {
-  //   request(url, function (error, response, body) {
-  //     console.log('error:', error); // Print the error if one occurred
-  //     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  //     console.log('body:', body); // Print the HTML for the Google homepage.
-  //   });
+    request(url, function (error, response, body) {
+      console.log('error:', error); // Print the error if one occurred
+      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      console.log('body:', body); // Print the HTML for the Google homepage.
+    });
 }
 
 job.start();

@@ -33,7 +33,7 @@
         <!-- User Name Column -->
         <ng-container matColumnDef="name">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.name}}> {{row.name}} </mat-cell>
+            <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.name}}> {{row.name | uppercase}} </mat-cell>
         </ng-container>
 
         <!-- Status Column -->
