@@ -1,1 +1,17 @@
-{"fileName":"uuuuu","destination":"","noOfCols":"","noOfRows":"","colDelimeter":"","attributeName":"test","dataType":"ALPHABETIC","dataPattern":"RANDOM","startingFrom":"","endingTo":"","startingLength":"","endingLength":"","fixedLength":"","charactersFor":"gd","requestId":10374}
+{
+    "fileName": "testnew",
+    "destination": "",
+    "noOfCols": "",
+    "noOfRows": "",
+    "colDelimeter": "",
+    "attributeName": "attr",
+    "dataType": "ALPHABETIC",
+    "dataPattern": "RANDOM",
+    "startingFrom": "",
+    "endingTo": "",
+    "startingLength": "",
+    "endingLength": "",
+    "fixedLength": "",
+    "charactersFor": "1",
+    "requestId": 10375
+}
