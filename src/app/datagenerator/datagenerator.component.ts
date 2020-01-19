@@ -124,7 +124,7 @@ export class DatageneratorComponent implements OnInit {
     this.createForm();
     this.setChangeValidate();
 
-    this.filterDataTypeList = this.formGroup.get('dataType')!.valueChanges
+    this.filterDataTypeList = this.formGroup.get('dataType').valueChanges
       .pipe(
         startWith(''),
         map(name => name ? this._filterDataType(name) : this.dataTypeList.slice())
@@ -136,7 +136,7 @@ export class DatageneratorComponent implements OnInit {
       map(name => name ? this._filterPattern(name) : this.dataPatternList.slice())
     )
 
-    if (this.eventEmitterService.subsVar == undefined) {
+    if (this.eventEmitterService.subsVar === undefined) {
       this.eventEmitterService.subsVar = this.eventEmitterService.invokeSetHomeTitle.subscribe((name: string) => {
         this.setTitle();
       });
