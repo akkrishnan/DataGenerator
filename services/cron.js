@@ -5,14 +5,20 @@ const express = require('express');
 const http = require('http');
 const request = require('request');
 const fs = require('fs');
+// const readFile = fs.readFile;
+const writeFile = fs.writeFile;
+var dynamicData;
 const directoryPath = path.join(__dirname, '../output');
+const topReqDataPath = './data/toprequests.json';
+const topRequestURL = 'http://dataserver/api/getTopRequests';
 var finalArray = [];
+var outputArray = [];
 const statusObj = {
   'TODO': 'IN QUEUE',
   'INPROGRESS': 'IN PROGRESS',
   'DONE': 'COMPLETED',
   'OTHERS': 'REJECTED',
-}
+};
 
 const colorObj = {
   'INQUEUE': 'lime',
@@ -21,20 +27,27 @@ const colorObj = {
   'IN PROGRESS': 'orange',
   'INPROGRESS': 'orange',
   'COMPLETED': 'green'
-}
+};
+
+const cronScheduler = '*/4 * * * * *';
 // app = express();
 
-const job = cron.job('*/5 * * * * *', () => {
+/* request(topRequestURL, function (error, response, data) {
+  dynamicData = data;
+  processTopRequest(dynamicData);
+}); */
 
-  url = 'http://datagen/api/getTopRequests';
-  request(url, function (error, response, data) {
-    // console.log(data);
-    getAllFiles(data);
-  });
+const job = cron.job(cronScheduler, () => {
   // console.log('running a task every 3 sec');
+  request(topRequestURL, function (error, response, data) {
+    dynamicData = data;
+    processTopRequest(dynamicData);
+  });
 });
 
-function getAllFiles(data) {
+job.start();
+
+function processTopRequest(dynamicData) {
   fs.readdir(directoryPath, function (err, files) {
     //handling error
     if (err) {
@@ -42,49 +55,45 @@ function getAllFiles(data) {
     }
     //listing all files using forEach
     files.forEach(function (file) {
-      // Do whatever you want to do with the file
-      // console.log({ file });
+      console.log(dynamicData);
       fileSplitValue = file.split('_');
-      requestID = fileSplitValue[2];
+      requestID = fileSplitValue[1];
       status = fileSplitValue[fileSplitValue.length - 1].split('.')[0];
-      // console.log(requestID);
-      // console.log(status);
-      parsedJSON = JSON.parse(data);
-      // console.log(parsedJSON);
+      parsedJSON = JSON.parse(dynamicData);
+      console.log(parsedJSON);
       // rec = parsedJSON.filter(function (item, index) { f = index; return item.id == requestID; });
-      idx = parsedJSON.findIndex(function (item, index) { return item.id == requestID });
-      rec = parsedJSON[idx];
+      idx = parsedJSON.findIndex(function (item, index) {
+        return item.id == requestID;
+      });
       if (idx > -1) {
-        rec.status = status;
-        rec.color = (status === "COMPLETED") ? (colorObj[status]) : (rec.color);
-        finalArray = [...new Set([...parsedJSON, ...[rec]])];
-        console.log(rec);
-        console.log('======== rec ===============');
-        // console.log(parsedJSON);
-        // console.log('======== rec ===============');
-      } 
-      // console.log('=========== rec ======');
-      // idx = parsedJSON.findIndex(i => i.id === requestID);
-      // rec = parsedJSON[idx];
-      // console.log(idx);
-      /* */
-      // console.log('================== EVERY LOOP ===============')
+        rec = parsedJSON[idx];
+        if (rec.status !== "COMPLETED" && status === "COMPLETED") {
+          rec.status = status;
+          rec.color = (status === "COMPLETED") ? (colorObj[status]) : (rec.color);
+          //   console.log('========= rec.status ===========');
+          //   console.log(rec.status);
+          //   console.log('========= rec.status ===========');
+        //   finalArray = [...new Set([...parsedJSON, ...[rec]])];
+          finalArray = Array.from(new Set(parsedJSON.concat([rec])))
+          dynamicData = JSON.stringify(finalArray);
+          
+          console.log('=========== dynamicData 111 ============');
+          console.log(dynamicData);
+          console.log('=========== dynamicData 111 ============');
+        }
+      }
     });
 
+    console.log('============== updating this data dynamicData=================== ');
+    console.log(dynamicData);
+    console.log('============== updating this data dynamicData=================== ');
 
-    console.log('=============== finalArray =============');
-    console.log(finalArray);
-    console.log('=============== finalArray =============');
+    writeFile(topReqDataPath, JSON.stringify(dynamicData), (err) => {
+      if (err) {
+        console.log(err); // Do something to handle the error or just throw it
+        throw new Error(err);
+      }
+      console.log('Successfully updated the top requests JSON!');
+    });
   });
 }
-
-
-function doRequest(url) {
-  request(url, function (error, response, body) {
-    console.log('error:', error); // Print the error if one occurred
-    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    console.log('body:', body); // Print the HTML for the Google homepage.
-  });
-}
-
-job.start();

@@ -54,10 +54,7 @@ updateJSONRouter.post('/', (req, res) => {
       }
       console.log('Successfully saved to new JSON!');
     });
-
-
   });
-
   res.send({
     success: true,
     message: successMessage

@@ -11,6 +11,8 @@ topRequests.get('/', (req, res) => {
     if (err) {
       throw err;
     }
+    // console.log(JSON.parse(data));
+    // console.log('JSON.parse(data) ===');
     res.send(JSON.parse(data));
   });
 });
