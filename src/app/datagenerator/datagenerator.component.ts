@@ -103,9 +103,29 @@ export class DatageneratorComponent implements OnInit {
     { name: 'GENDER', id: 'GENDER' }
   ];
 
-  dataPatternList: JsonFormat[] = [
+  dataPatternListAlphabetic: JsonFormat[] = [
     { name: 'RANDOM', id: 'RANDOM' },
     { name: 'RANDOM-FIX-LEN', id: 'RANDOM-FIX-LEN' }
+  ];
+
+  dataPatternListEmailId: JsonFormat[] = [
+    { name: '_@.', id: '_@.' },
+    { name: '.@.', id: '.@.' }
+  ];
+
+  dataPatternListDateTimeNow: JsonFormat[] = [
+    { name: 'IST', id: 'IST' },
+    { name: 'EST', id: 'EST' },
+    { name: 'PST', id: 'PST' },
+    { name: 'GMT', id: 'GMT' },
+    { name: 'MM-DD-YYYY HH:MM', id: 'MM-DD-YYYY HH:MM' },
+    { name: 'MM-DD-YYYY HH:MM:SS', id: 'MM-DD-YYYY HH:MM:SS' }
+  ];
+
+  dataPatternListGender: JsonFormat[] = [
+    { name: 'MALE', id: 'MALE' },
+    { name: 'FEMALE', id: 'FEMALE' },
+    { name: 'MALE/FEMALE', id: 'MALE/FEMALE' }
   ];
 
   dataFormatList: JsonFormat[] = [
@@ -114,6 +134,25 @@ export class DatageneratorComponent implements OnInit {
     { name: 'JSON', id: 'json' },
     { name: 'Database', id: 'database' }
   ];
+
+  postFormatList = {
+    requestId: { value: 'Request ID', key: 'requestId' },
+    fileName: { value: 'File Name', key: 'fileName' },
+    destination: { value: 'Destination', key: 'destination' },
+    noOfCols: { value: 'No. of Columns', key: 'noOfCols' },
+    noOfRows: { value: 'No. of Rows', key: 'noOfRows' },
+    colDelimeter: { value: 'Column Delimeter', key: 'colDelimeter' },
+    attributeName: { value: 'Attribute Name', key: 'attributeName' },
+    dataType: { value: 'Data Type', key: 'dataType' },
+    dataPattern: { value: 'Data Pattern', key: 'dataPattern' },
+    startingFrom: { value: 'Starting From', key: 'startingFrom' },
+    endingTo: { value: 'Ending To', key: 'endingTo' },
+    startingLength: { value: 'Starting Length', key: 'startingLength' },
+    endingLength: { value: 'Ending Length', key: 'endingLength' },
+    fixedLength: { value: 'Fixed Length', key: 'fixedLength' },
+    charactersFor: { value: 'Fixed Length', key: 'charactersFor' },
+    userId: { value: 'userId', key: 'userId' }
+  };
 
   title = 'Data Generator';
 
@@ -139,13 +178,13 @@ export class DatageneratorComponent implements OnInit {
     this.filterDataTypeList = this.formGroup.get('dataType').valueChanges
       .pipe(
         startWith(''),
-        map(name => name ? this._filterDataType(name) : this.dataTypeList.slice())
+        map(name => name ? (this.processFilterDataPattern(), this._filterDataType(name)) : this.dataTypeList.slice())
       );
 
     this.filterDataPatternList = this.formGroup.get('dataPattern').valueChanges
       .pipe(
         startWith(''),
-        map(name => name ? this._filterPattern(name) : this.dataPatternList.slice())
+        map(name => name ? this._filterPattern(name) : this.getFilterArray().slice())
       );
 
     if (this.eventEmitterService.subsVar === undefined) {
@@ -153,6 +192,15 @@ export class DatageneratorComponent implements OnInit {
         this.setTitle();
       });
     }
+  }
+
+  processFilterDataPattern() {
+    console.log('processFilterDataPattern=== == filterDataPatternList');
+    this.filterDataPatternList = this.formGroup.get('dataPattern').valueChanges
+      .pipe(
+        startWith(''),
+        map(name => name ? this._filterPattern(name) : this.getFilterArray().slice())
+      );
   }
 
   showSuccessMessage(message: string, action: string) {
@@ -190,7 +238,7 @@ export class DatageneratorComponent implements OnInit {
 
 
 
-    this.formGroup.setValue({
+    /* this.formGroup.setValue({
       fileName: '',
       destination: 'C:/Users/Public/Desktop',
       noOfCols: '1',
@@ -205,6 +253,18 @@ export class DatageneratorComponent implements OnInit {
       endingLength: '1',
       fixedLength: '1',
       charactersFor: ''
+    }); */
+
+    this.formGroup.patchValue({
+      destination: 'C:/Users/Public/Desktop',
+      noOfCols: '1',
+      noOfRows: '1',
+      colDelimeter: ',',
+      startingFrom: '1',
+      endingTo: '1',
+      startingLength: '1',
+      endingLength: '1',
+      fixedLength: '1'
     });
   }
 
@@ -218,8 +278,25 @@ export class DatageneratorComponent implements OnInit {
   private _filterPattern(value: string): JsonFormat[] {
     if (value) {
       const filterValue = value.toLowerCase();
-      return this.dataPatternList.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
+      return this.getFilterArray().filter((item: any) => item.name.toLowerCase().indexOf(filterValue) === 0);
     }
+  }
+
+  private getFilterArray(): JsonFormat[] {
+    let filterArr: JsonFormat[];
+    const dataTypeValue = this.formGroup.get('dataType').value;
+    if (dataTypeValue === 'ALPHABETIC') {
+      filterArr = this.dataPatternListAlphabetic;
+    } else if (dataTypeValue === 'EMAILID') {
+      filterArr = this.dataPatternListEmailId;
+    } else if (dataTypeValue === 'DATETIMENOW') {
+      filterArr = this.dataPatternListDateTimeNow;
+    } else if (dataTypeValue === 'GENDER') {
+      filterArr = this.dataPatternListGender;
+    } else {
+      filterArr = this.dataPatternListAlphabetic;
+    }
+    return filterArr;
   }
 
   setChangeValidate() {
@@ -344,7 +421,12 @@ export class DatageneratorComponent implements OnInit {
   }
 
   setDefaultValues() {
-    this.formGroup.setValue({
+
+    // this.formGroup.markAsPristine();
+    // this.formGroup.markAsUntouched();
+    // this.formGroup.updateValueAndValidity();
+
+    this.formGroup.reset({
       fileName: '',
       destination: 'C:/Users/Public/Desktop',
       noOfCols: '1',
@@ -360,12 +442,53 @@ export class DatageneratorComponent implements OnInit {
       fixedLength: '1',
       charactersFor: ''
     });
+
+    /* this.formGroup.patchValue({
+      // fileName: '',
+      destination: 'C:/Users/Public/Desktop',
+      noOfCols: '1',
+      noOfRows: '1',
+      colDelimeter: ',',
+      attributeName: '',
+      dataType: '',
+      dataPattern: '',
+      startingFrom: '1',
+      endingTo: '1',
+      startingLength: '1',
+      endingLength: '1',
+      fixedLength: '1',
+      charactersFor: ''
+    }); */
   }
 
   onSubmit(post: any) {
     if (this.formGroup.valid) {
       // console.log("Form Submitted!");
       post.requestId = 0;
+
+      /* postFormatList = {
+        requestId: { value: 'Request ID', key: 'requestId' },
+        fileName: { value: 'File Name', key: 'fileName' },
+        destination: { value: 'Destination', key: 'destination' },
+        noOfCols: { value: 'No. of Columns', key: 'noOfCols' },
+        noOfRows: { value: 'No. of Rows', key: 'noOfRows' },
+        colDelimeter: { value: 'Column Delimeter', key: 'colDelimeter' },
+        attributeName: { value: 'Attribute Name', key: 'attributeName' },
+        dataType: { value: 'Data Type', key: 'dataType' },
+        dataPattern: { value: 'Data Pattern', key: 'dataPattern' },
+        startingFrom: { value: 'Starting From', key: 'startingFrom' },
+        endingTo: { value: 'Ending To', key: 'endingTo' },
+        startingLength: { value: 'Starting Length', key: 'startingLength' },
+        endingLength: { value: 'Ending Length', key: 'endingLength' },
+        fixedLength: { value: 'Fixed Length', key: 'fixedLength' },
+        charactersFor: { value: 'Fixed Length', key: 'charactersFor' },
+        userId: { value: 'userId', key: 'userId' }
+      }; */
+
+      /* newPost = {
+        post.this.postFormatList.requestId.value : post[this.postFormatList['requestId'].key]
+      } */
+
       this.service.getUserID().then(res => {
         console.log('========== res ===================');
         console.log(res.userName);

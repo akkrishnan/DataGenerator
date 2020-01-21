@@ -6,6 +6,7 @@ import { DashboardService } from './dashboard.service';
 import {
   ErrorStateMatcher,
   MatPaginator,
+  MatProgressBar,
   MatSort,
   MatTableDataSource
 } from '@angular/material';

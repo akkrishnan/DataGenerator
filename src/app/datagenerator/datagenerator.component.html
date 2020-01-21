@@ -1,3 +1,4 @@
+<!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
 <app-header></app-header>
 <div class="app-form-container">
   <!-- *ngIf="!post; else forminfo" novalidate -->
@@ -92,7 +93,7 @@
                       <div>
                         <mat-form-field appearance="outline">
                           <mat-label>Attribute Name</mat-label>
-                          <input matInput formControlName="attributeName" autocomplete="off"
+                          <input matInput formControlName="attributeName" autocomplete="disable"
                             placeholder="Enter Attribute Name">
                           <!-- <mat-error *ngIf="formGroup.controls['attributeName'].invalid">
                                                         {{ validateAttributeName() }}
@@ -115,7 +116,7 @@
                         <mat-form-field appearance="outline">
                           <mat-label>Data Type</mat-label>
                           <input matInput placeholder="Data Type" aria-label="Data Type"
-                            [matAutocomplete]="autoDataType" autocomplete="off" formControlName="dataType">
+                            [matAutocomplete]="autoDataType" autocomplete="off" formControlName="dataType" (select)="processFilterDataPattern()">
                           <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
                           <mat-autocomplete #autoDataType="matAutocomplete">
                             <mat-option *ngFor="let item of filterDataTypeList | async" [value]="item.name">

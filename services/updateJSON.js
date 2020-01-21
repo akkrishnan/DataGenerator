@@ -15,45 +15,73 @@ const successMessage = "Your request is successfully submitted";
 
 updateJSONRouter.post('/', (req, res) => {
   const requestBody = req.body;
+  var parsedData = {};
   console.log(requestBody);
+  console.log('========== requestBody =============');
   readFile(topReqDataPath, 'utf8', (err, data) => {
     if (err) {
       throw err;
     }
-    const parsedData = JSON.parse(data);
-    const sourceData = requestBody;
-    // console.log(sourceData);
-    console.log('============== parsedData.userId ==============');
-    console.log(requestBody.userId);
-    console.log('============== parsedData.userId ==============');
-    const requestId = parseInt(parsedData[0].id) + 1;
 
-    const newRecord = {
-      id: requestId,
-      name: requestBody.userId,
-      status: 'IN QUEUE',
-      color: 'lime'
-    };
-    parsedData.unshift(newRecord);
+    console.log(data);
+    console.log('====== data 111 ======');
+    console.log(typeof data);
 
-    writeFile(topReqDataPath, JSON.stringify(parsedData), (err) => {
-      if (err) {
-        console.log(err); // Do something to handle the error or just throw it
-        throw new Error(err);
+    try {
+      if (typeof data === "string") {
+        parsedData = unescape(data);
       }
-      console.log('Successfully updated the Top Requests JSON!');
-    });
-    console.log('=============== sourceData ==============');
-    sourceData.requestId = requestId;
-    console.log(sourceData);
+      parsedData = JSON.parse(parsedData);
 
-    writeFile(requestDataPath, JSON.stringify(sourceData), (err) => {
-      if (err) {
-        console.log(err); // Do something to handle the error or just throw it
-        throw new Error(err);
-      }
-      console.log('Successfully saved to new JSON!');
-    });
+      console.log(parsedData);
+      console.log('====== parseData ==&&&&&====');
+
+      const sourceData = requestBody;
+      // console.log(sourceData);
+      console.log('============== userId ==============');
+      console.log(requestBody.userId);
+      console.log('============== userId ==============');
+      const requestId = parseInt(parsedData[0].id) + 1;
+
+      const newRecord = {
+        id: requestId,
+        name: requestBody.userId,
+        status: 'IN QUEUE',
+        color: 'lime'
+      };
+
+      console.log(parsedData);
+      console.log(typeof parsedData);
+      console.log('====== parseData  before unshift ====');
+
+      // parsedData = JSON.parse(parsedData);
+
+      parsedData.unshift(newRecord);
+
+      writeFile(topReqDataPath, JSON.stringify(parsedData), (err) => {
+        if (err) {
+          console.log(err); // Do something to handle the error or just throw it
+          throw new Error(err);
+        }
+        console.log('Successfully updated the Top Requests JSON!');
+      });
+      console.log('=============== sourceData ==============');
+      sourceData.requestId = requestId;
+      
+      console.log(sourceData);
+
+      writeFile(requestDataPath, JSON.stringify(sourceData), (err) => {
+        if (err) {
+          console.log(err); // Do something to handle the error or just throw it
+          throw new Error(err);
+        }
+        console.log('Successfully saved to new JSON!');
+      });
+
+    } catch (e) {
+      console.log('======== exception happened =============');
+      console.log(e);
+    }
   });
   res.send({
     success: true,

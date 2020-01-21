@@ -17,7 +17,7 @@ const statusObj = {
   'TODO': 'IN QUEUE',
   'INPROGRESS': 'IN PROGRESS',
   'DONE': 'COMPLETED',
-  'OTHERS': 'REJECTED',
+  'OTHERS': 'REJECTED'
 };
 
 const colorObj = {
@@ -29,7 +29,7 @@ const colorObj = {
   'COMPLETED': 'green'
 };
 
-const cronScheduler = '*/4 * * * * *';
+const cronScheduler = '*/5 * * * * *';
 // app = express();
 
 /* request(topRequestURL, function (error, response, data) {
@@ -38,10 +38,13 @@ const cronScheduler = '*/4 * * * * *';
 }); */
 
 const job = cron.job(cronScheduler, () => {
-  // console.log('running a task every 3 sec');
+  console.log('running a task every 5 sec');
+  console.log(statusObj.DONE);
   request(topRequestURL, function (error, response, data) {
     dynamicData = data;
-    processTopRequest(dynamicData);
+    if (typeof data !== "undefined") {
+      processTopRequest(dynamicData);
+    }
   });
 });
 
@@ -67,16 +70,16 @@ function processTopRequest(dynamicData) {
       });
       if (idx > -1) {
         rec = parsedJSON[idx];
-        if (rec.status !== "COMPLETED" && status === "COMPLETED") {
+        if (rec.status !== statusObj.DONE && status === statusObj.DONE) {
           rec.status = status;
-          rec.color = (status === "COMPLETED") ? (colorObj[status]) : (rec.color);
+          rec.color = (status === statusObj.DONE) ? (colorObj[status]) : (rec.color);
           //   console.log('========= rec.status ===========');
           //   console.log(rec.status);
           //   console.log('========= rec.status ===========');
-        //   finalArray = [...new Set([...parsedJSON, ...[rec]])];
-          finalArray = Array.from(new Set(parsedJSON.concat([rec])))
+          //   finalArray = [...new Set([...parsedJSON, ...[rec]])];
+          finalArray = Array.from(new Set(parsedJSON.concat([rec])));
           dynamicData = JSON.stringify(finalArray);
-          
+
           console.log('=========== dynamicData 111 ============');
           console.log(dynamicData);
           console.log('=========== dynamicData 111 ============');

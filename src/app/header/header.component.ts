@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
 
   title = 'Data Generator Tool';
 
-  encryptSecretKey = "$datagen$";
+  encryptSecretKey = '$datagen$';
 
   constructor(
     private service: HeaderService,
