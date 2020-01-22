@@ -1,53 +1,54 @@
 <app-header></app-header>
 <table width="100%">
-    <tr>
-        <td width="80%">
-            <div class="mat-card-title marginL dashboard-title">Data Request Summary</div>
-            <div class="mat-card-subtitle marginL">Below is the Top 5 data request summary</div>
-            <!-- <mat-card class="searchFieldHeader"> 
+  <tr>
+    <td width="80%">
+      <div class="mat-card-title marginL dashboard-title">Data Request Summary</div>
+      <div class="mat-card-subtitle marginL">Below is the Top 5 data request summary</div>
+      <!-- <mat-card class="searchFieldHeader"> 
                 <mat-card-header align="left">
                     <mat-card-title>Data Request Summary</mat-card-title>
                     <mat-card-subtitle>Below is the Top 5 data request summary</mat-card-subtitle>
                  </mat-card-header> 
             </mat-card>  -->
-        </td>
-        <td>
-            <div width="100%" align="right" style="padding-right:20px;margin-top:20px;">
-                <mat-form-field class="searchField">
-                    <input matInput autocomplete="off" matTooltip="Enter any data to filter"
-                        (keyup)="applyFilter($event.target.value)" placeholder="Search">
-                </mat-form-field>
-            </div>
-        </td>
-    </tr>
+    </td>
+    <td>
+      <div width="100%" align="right" style="padding-right:20px;margin-top:20px;">
+        <mat-form-field class="searchField">
+          <input matInput autocomplete="off" matTooltip="Enter any data to filter"
+            (keyup)="applyFilter($event.target.value)" placeholder="Search">
+          <mat-icon matSuffix color="primary">search</mat-icon>
+        </mat-form-field>
+      </div>
+    </td>
+  </tr>
 </table>
 <div class="mat-elevation-z8">
-    <mat-table mat-table [dataSource]="dataSource" matSort class="dashboardGrid">
+  <mat-table mat-table [dataSource]="dataSource" matSort class="dashboardGrid">
 
-        <!-- ID Column -->
-        <ng-container matColumnDef="id" width="30">
-            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
-        </ng-container>
+    <!-- ID Column -->
+    <ng-container matColumnDef="id" width="30">
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+    </ng-container>
 
-        <!-- User Name Column -->
-        <ng-container matColumnDef="name">
-            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.name}}> {{row.name | uppercase}} </mat-cell>
-        </ng-container>
+    <!-- User Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let row" matTooltip={{row.name}}> {{row.name | uppercase}} </mat-cell>
+    </ng-container>
 
-        <!-- Status Column -->
-        <ng-container matColumnDef="status">
-            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-            <!-- <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell> -->
-            <!-- <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell> -->
-            <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
-        </ng-container>
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+      <!-- <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell> -->
+      <!-- <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell> -->
+      <mat-cell mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
+    </ng-container>
 
-        <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row mat-row *matRowDef="let row; columns: displayedColumns;">
-        </mat-row>
-    </mat-table>
+    <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>

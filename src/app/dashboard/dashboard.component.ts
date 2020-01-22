@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
 
 import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
@@ -48,10 +48,13 @@ const NAMES: string[] = [
     DashboardService
   ]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['id', 'name', 'status'];
   dataSource: MatTableDataSource<UserData>;
+
+  intervalId: any;
+  timeInterval = 10000;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -68,12 +71,21 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
+    this.getAllRequests();
+    this.intervalId = setInterval(() => {
+      this.getAllRequests();
+    }, this.timeInterval);
 
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
+  }
+
+  getAllRequests() {
     this.service.getList().then(res => {
       this.displayedColumns = Object.keys(res[0]);
-
       this.displayedColumns.splice(this.displayedColumns.indexOf('color'), 1);
-
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -88,7 +100,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /** Builds and returns a new User. */
+  /* Builds mock data without JSON file  */
   createNewUser(id: number): UserData {
     const nameVal = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
       NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
@@ -101,5 +113,4 @@ export class DashboardComponent implements OnInit {
       color: COLORS[idx]
     };
   }
-
 }

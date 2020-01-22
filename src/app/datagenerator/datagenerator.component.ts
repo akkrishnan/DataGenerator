@@ -53,29 +53,29 @@ export class DatageneratorComponent implements OnInit {
   actionMessage = 'Success!';
 
   error: JSONObject[] = [
-    { key: 'fileName', value: 'Enter file name without spaces. For eg., "NEWFILENAME01"' },
-    { key: 'destination', value: 'Enter destination, you can provide your desktop location' },
-    { key: 'noOfCols', value: 'Enter a number' },
-    { key: 'noOfRows', value: 'Enter a number' },
-    { key: 'colDelimeter', value: 'Enter column delimeter' },
-    { key: 'attributeName', value: 'Enter attribute name' },
+    { key: 'FileName', value: 'Enter file name without spaces. For eg., "NEWFILENAME01"' },
+    { key: 'Destination', value: 'Enter Destination, you can provide your desktop location' },
+    { key: 'NoOfCols', value: 'Enter a number' },
+    { key: 'NoOfRows', value: 'Enter a number' },
+    { key: 'ColDelimeter', value: 'Enter column delimeter' },
+    { key: 'AttributeName', value: 'Enter attribute name' },
     // { key: 'dataName', value: 'Enter data name' },
-    { key: 'dataType', value: 'Enter data type' },
-    { key: 'dataPattern', value: 'Enter data pattern' },
-    { key: 'startingFrom', value: 'Enter a number' },
-    { key: 'endingTo', value: 'Enter a number' },
-    { key: 'startingLength', value: 'Enter a number' },
-    { key: 'endingLength', value: 'Enter a number' },
-    { key: 'fixedLength', value: 'Enter a number' },
-    { key: 'charactersFor', value: 'Enter some characters' }
+    { key: 'DataType', value: 'Enter data type' },
+    { key: 'DataPattern', value: 'Enter data pattern' },
+    { key: 'StartingFrom', value: 'Enter a number' },
+    { key: 'EndingTo', value: 'Enter a number' },
+    { key: 'StartingLength', value: 'Enter a number' },
+    { key: 'EndingLength', value: 'Enter a number' },
+    { key: 'FixedLength', value: 'Enter a number' },
+    { key: 'CharactersFor', value: 'Enter some characters' }
   ];
 
   hint: JSONObject[] = [
-    { key: 'fileName', value: 'Enter any file name. For eg., "NEWFILENAME01"' },
-    { key: 'destination', value: 'Provide your desktop location' },
-    { key: 'noOfCols', value: 'Enter number of columns' },
-    { key: 'noOfRows', value: 'Enter number of rows' },
-    { key: 'colDelimeter', value: 'For eg. Comma (,) can be entered' }
+    { key: 'FileName', value: 'Enter any file name. For eg., "NEWFILENAME01"' },
+    { key: 'Destination', value: 'Provide your desktop location' },
+    { key: 'NoOfCols', value: 'Enter number of columns' },
+    { key: 'NoOfRows', value: 'Enter number of rows' },
+    { key: 'ColDelimeter', value: 'For eg. Comma (,) can be entered' }
   ];
 
   projectNameList: JsonFormat[] = [
@@ -137,20 +137,20 @@ export class DatageneratorComponent implements OnInit {
 
   postFormatList = {
     requestId: { value: 'Request ID', key: 'requestId' },
-    fileName: { value: 'File Name', key: 'fileName' },
-    destination: { value: 'Destination', key: 'destination' },
-    noOfCols: { value: 'No. of Columns', key: 'noOfCols' },
-    noOfRows: { value: 'No. of Rows', key: 'noOfRows' },
-    colDelimeter: { value: 'Column Delimeter', key: 'colDelimeter' },
-    attributeName: { value: 'Attribute Name', key: 'attributeName' },
-    dataType: { value: 'Data Type', key: 'dataType' },
-    dataPattern: { value: 'Data Pattern', key: 'dataPattern' },
-    startingFrom: { value: 'Starting From', key: 'startingFrom' },
-    endingTo: { value: 'Ending To', key: 'endingTo' },
-    startingLength: { value: 'Starting Length', key: 'startingLength' },
-    endingLength: { value: 'Ending Length', key: 'endingLength' },
-    fixedLength: { value: 'Fixed Length', key: 'fixedLength' },
-    charactersFor: { value: 'Fixed Length', key: 'charactersFor' },
+    FileName: { value: 'File Name', key: 'FileName' },
+    Destination: { value: 'Destination', key: 'Destination' },
+    NoOfCols: { value: 'No. of Columns', key: 'NoOfCols' },
+    NoOfRows: { value: 'No. of Rows', key: 'NoOfRows' },
+    ColDelimeter: { value: 'Column Delimeter', key: 'ColDelimeter' },
+    AttributeName: { value: 'Attribute Name', key: 'AttributeName' },
+    DataType: { value: 'Data Type', key: 'DataType' },
+    DataPattern: { value: 'Data Pattern', key: 'DataPattern' },
+    StartingFrom: { value: 'Starting From', key: 'StartingFrom' },
+    EndingTo: { value: 'Ending To', key: 'EndingTo' },
+    StartingLength: { value: 'Starting Length', key: 'StartingLength' },
+    EndingLength: { value: 'Ending Length', key: 'EndingLength' },
+    FixedLength: { value: 'Fixed Length', key: 'FixedLength' },
+    CharactersFor: { value: 'Fixed Length', key: 'CharactersFor' },
     userId: { value: 'userId', key: 'userId' }
   };
 
@@ -175,13 +175,13 @@ export class DatageneratorComponent implements OnInit {
     this.createForm();
     this.setChangeValidate();
 
-    this.filterDataTypeList = this.formGroup.get('dataType').valueChanges
+    this.filterDataTypeList = this.formGroup.get('DataType').valueChanges
       .pipe(
         startWith(''),
         map(name => name ? (this.processFilterDataPattern(), this._filterDataType(name)) : this.dataTypeList.slice())
       );
 
-    this.filterDataPatternList = this.formGroup.get('dataPattern').valueChanges
+    this.filterDataPatternList = this.formGroup.get('DataPattern').valueChanges
       .pipe(
         startWith(''),
         map(name => name ? this._filterPattern(name) : this.getFilterArray().slice())
@@ -196,7 +196,7 @@ export class DatageneratorComponent implements OnInit {
 
   processFilterDataPattern() {
     console.log('processFilterDataPattern=== == filterDataPatternList');
-    this.filterDataPatternList = this.formGroup.get('dataPattern').valueChanges
+    this.filterDataPatternList = this.formGroup.get('DataPattern').valueChanges
       .pipe(
         startWith(''),
         map(name => name ? this._filterPattern(name) : this.getFilterArray().slice())
@@ -219,52 +219,52 @@ export class DatageneratorComponent implements OnInit {
 
   createForm() {
     this.formGroup = new FormGroup({
-      fileName: new FormControl('', [Validators.required]),
-      destination: new FormControl(''),
-      noOfCols: new FormControl(''),
-      noOfRows: new FormControl(''),
-      colDelimeter: new FormControl(''),
-      attributeName: new FormControl(''),
+      FileName: new FormControl(''),
+      Destination: new FormControl(''),
+      NoOfCols: new FormControl(''),
+      NoOfRows: new FormControl(''),
+      ColDelimeter: new FormControl(''),
+      AttributeName: new FormControl(''),
       // dataName: new FormControl('', [Validators.required]),
-      dataType: new FormControl(''),
-      dataPattern: new FormControl(''),
-      startingFrom: new FormControl(''),
-      endingTo: new FormControl(''),
-      startingLength: new FormControl(''),
-      endingLength: new FormControl(''),
-      fixedLength: new FormControl(''),
-      charactersFor: new FormControl('')
+      DataType: new FormControl(''),
+      DataPattern: new FormControl(''),
+      StartingFrom: new FormControl(''),
+      EndingTo: new FormControl(''),
+      StartingLength: new FormControl(''),
+      EndingLength: new FormControl(''),
+      FixedLength: new FormControl(''),
+      CharactersFor: new FormControl('')
     });
 
 
 
     /* this.formGroup.setValue({
-      fileName: '',
-      destination: 'C:/Users/Public/Desktop',
-      noOfCols: '1',
-      noOfRows: '1',
-      colDelimeter: ',',
-      attributeName: '',
-      dataType: '',
-      dataPattern: '',
-      startingFrom: '1',
-      endingTo: '1',
-      startingLength: '1',
-      endingLength: '1',
-      fixedLength: '1',
-      charactersFor: ''
+      FileName: '',
+      Destination: 'C:/Users/Public/Desktop',
+      NoOfCols: '1',
+      NoOfRows: '1',
+      ColDelimeter: ',',
+      AttributeName: '',
+      DataType: '',
+      DataPattern: '',
+      StartingFrom: '1',
+      EndingTo: '1',
+      StartingLength: '1',
+      EndingLength: '1',
+      FixedLength: '1',
+      CharactersFor: ''
     }); */
 
     this.formGroup.patchValue({
-      destination: 'C:/Users/Public/Desktop',
-      noOfCols: '1',
-      noOfRows: '1',
-      colDelimeter: ',',
-      startingFrom: '1',
-      endingTo: '1',
-      startingLength: '1',
-      endingLength: '1',
-      fixedLength: '1'
+      Destination: 'C:/Users/Public/Desktop',
+      NoOfCols: '1',
+      NoOfRows: '1',
+      ColDelimeter: ',',
+      StartingFrom: '1',
+      EndingTo: '1',
+      StartingLength: '1',
+      EndingLength: '1',
+      FixedLength: '1'
     });
   }
 
@@ -284,7 +284,7 @@ export class DatageneratorComponent implements OnInit {
 
   private getFilterArray(): JsonFormat[] {
     let filterArr: JsonFormat[];
-    const dataTypeValue = this.formGroup.get('dataType').value;
+    const dataTypeValue = this.formGroup.get('DataType').value;
     if (dataTypeValue === 'ALPHABETIC') {
       filterArr = this.dataPatternListAlphabetic;
     } else if (dataTypeValue === 'EMAILID') {
@@ -328,27 +328,27 @@ export class DatageneratorComponent implements OnInit {
   }
 
   // validateFileName() {
-  //   return this.validateErrorMessage('fileName');
+  //   return this.validateErrorMessage('FileName');
   // }
 
   // validateDestination() {
-  //   return this.validateErrorMessage('destination');
+  //   return this.validateErrorMessage('Destination');
   // }
 
   // validateNoOfCols() {
-  //   return this.validateErrorMessage('noOfCols');
+  //   return this.validateErrorMessage('NoOfCols');
   // }
 
   // validateNoOfRows() {
-  //   return this.validateErrorMessage('noOfRows');
+  //   return this.validateErrorMessage('NoOfRows');
   // }
 
   // validateDelimeter() {
-  //   return this.validateErrorMessage('colDelimeter');
+  //   return this.validateErrorMessage('ColDelimeter');
   // }
 
   // validateAttributeName() {
-  //   return this.validateErrorMessage('attributeName');
+  //   return this.validateErrorMessage('AttributeName');
   // }
 
   // validateDataName() {
@@ -356,55 +356,55 @@ export class DatageneratorComponent implements OnInit {
   // }
 
   // validateDataType() {
-  //   return this.validateErrorMessage('dataType');
+  //   return this.validateErrorMessage('DataType');
   // }
 
   // validateDataPattern() {
-  //   return this.validateErrorMessage('dataPattern');
+  //   return this.validateErrorMessage('DataPattern');
   // }
 
   // validateStartingFrom() {
-  //   return this.validateErrorMessage('startingFrom');
+  //   return this.validateErrorMessage('StartingFrom');
   // }
 
   // validateEndingTo() {
-  //   return this.validateErrorMessage('endingTo');
+  //   return this.validateErrorMessage('EndingTo');
   // }
 
   // validateStartingLen() {
-  //   return this.validateErrorMessage('startingLength');
+  //   return this.validateErrorMessage('StartingLength');
   // }
 
   // validateEndingLen() {
-  //   return this.validateErrorMessage('endingLength');
+  //   return this.validateErrorMessage('EndingLength');
   // }
 
   // validateFixedLen() {
-  //   return this.validateErrorMessage('fixedLength');
+  //   return this.validateErrorMessage('FixedLength');
   // }
 
   // validateCharactersFor() {
-  //   return this.validateErrorMessage('charactersFor');
+  //   return this.validateErrorMessage('CharactersFor');
   // }
 
   getFileNameHint() {
-    return this.getHintMessage('fileName');
+    return this.getHintMessage('FileName');
   }
 
   getDestinationHint() {
-    return this.getHintMessage('destination');
+    return this.getHintMessage('Destination');
   }
 
   getNoOfColsHint() {
-    return this.getHintMessage('noOfCols');
+    return this.getHintMessage('NoOfCols');
   }
 
   getNoOfRowsHint() {
-    return this.getHintMessage('noOfRows');
+    return this.getHintMessage('NoOfRows');
   }
 
   getColDelimeterHint() {
-    return this.getHintMessage('colDelimeter');
+    return this.getHintMessage('ColDelimeter');
   }
 
   // triggerResize() {
@@ -427,37 +427,37 @@ export class DatageneratorComponent implements OnInit {
     // this.formGroup.updateValueAndValidity();
 
     this.formGroup.reset({
-      fileName: '',
-      destination: 'C:/Users/Public/Desktop',
-      noOfCols: '1',
-      noOfRows: '1',
-      colDelimeter: ',',
-      attributeName: '',
-      dataType: '',
-      dataPattern: '',
-      startingFrom: '1',
-      endingTo: '1',
-      startingLength: '1',
-      endingLength: '1',
-      fixedLength: '1',
-      charactersFor: ''
+      FileName: '',
+      Destination: 'C:/Users/Public/Desktop',
+      NoOfCols: '1',
+      NoOfRows: '1',
+      ColDelimeter: ',',
+      AttributeName: '',
+      DataType: '',
+      DataPattern: '',
+      StartingFrom: '1',
+      EndingTo: '1',
+      StartingLength: '1',
+      EndingLength: '1',
+      FixedLength: '1',
+      CharactersFor: ''
     });
 
     /* this.formGroup.patchValue({
-      // fileName: '',
-      destination: 'C:/Users/Public/Desktop',
-      noOfCols: '1',
-      noOfRows: '1',
-      colDelimeter: ',',
-      attributeName: '',
-      dataType: '',
-      dataPattern: '',
-      startingFrom: '1',
-      endingTo: '1',
-      startingLength: '1',
-      endingLength: '1',
-      fixedLength: '1',
-      charactersFor: ''
+      // FileName: '',
+      Destination: 'C:/Users/Public/Desktop',
+      NoOfCols: '1',
+      NoOfRows: '1',
+      ColDelimeter: ',',
+      AttributeName: '',
+      DataType: '',
+      DataPattern: '',
+      StartingFrom: '1',
+      EndingTo: '1',
+      StartingLength: '1',
+      EndingLength: '1',
+      FixedLength: '1',
+      CharactersFor: ''
     }); */
   }
 
@@ -468,20 +468,20 @@ export class DatageneratorComponent implements OnInit {
 
       /* postFormatList = {
         requestId: { value: 'Request ID', key: 'requestId' },
-        fileName: { value: 'File Name', key: 'fileName' },
-        destination: { value: 'Destination', key: 'destination' },
-        noOfCols: { value: 'No. of Columns', key: 'noOfCols' },
-        noOfRows: { value: 'No. of Rows', key: 'noOfRows' },
-        colDelimeter: { value: 'Column Delimeter', key: 'colDelimeter' },
-        attributeName: { value: 'Attribute Name', key: 'attributeName' },
-        dataType: { value: 'Data Type', key: 'dataType' },
-        dataPattern: { value: 'Data Pattern', key: 'dataPattern' },
-        startingFrom: { value: 'Starting From', key: 'startingFrom' },
-        endingTo: { value: 'Ending To', key: 'endingTo' },
-        startingLength: { value: 'Starting Length', key: 'startingLength' },
-        endingLength: { value: 'Ending Length', key: 'endingLength' },
-        fixedLength: { value: 'Fixed Length', key: 'fixedLength' },
-        charactersFor: { value: 'Fixed Length', key: 'charactersFor' },
+        FileName: { value: 'File Name', key: 'FileName' },
+        Destination: { value: 'Destination', key: 'Destination' },
+        NoOfCols: { value: 'No. of Columns', key: 'NoOfCols' },
+        NoOfRows: { value: 'No. of Rows', key: 'NoOfRows' },
+        ColDelimeter: { value: 'Column Delimeter', key: 'ColDelimeter' },
+        AttributeName: { value: 'Attribute Name', key: 'AttributeName' },
+        DataType: { value: 'Data Type', key: 'DataType' },
+        DataPattern: { value: 'Data Pattern', key: 'DataPattern' },
+        StartingFrom: { value: 'Starting From', key: 'StartingFrom' },
+        EndingTo: { value: 'Ending To', key: 'EndingTo' },
+        StartingLength: { value: 'Starting Length', key: 'StartingLength' },
+        EndingLength: { value: 'Ending Length', key: 'EndingLength' },
+        FixedLength: { value: 'Fixed Length', key: 'FixedLength' },
+        CharactersFor: { value: 'Fixed Length', key: 'CharactersFor' },
         userId: { value: 'userId', key: 'userId' }
       }; */
 

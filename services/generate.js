@@ -30,7 +30,7 @@ generateCSVRouter.post('/', (req, res) => {
         console.log('============== parsedData =============');
 
         const requestId = parsedData.requestId;
-        const givenFileName = parsedData.fileName;
+        const givenFileName = parsedData.FileName;
         var outputCSVPath = './output/';
         // var outputCSVPath = './output/RequestForm_';
         outputCSVPath = outputCSVPath + givenFileName + '_' + requestId + '_INQUEUE' + fileExtn;

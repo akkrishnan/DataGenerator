@@ -13,6 +13,9 @@
             <mat-label>Username</mat-label>
             <input formControlName="loginText" matInput matTooltip="Enter the username" placeholder="Username"
               autocomplete="off" value="" (keydown)="validateErrorMessage()">
+              <button mat-icon-button matSuffix [attr.aria-label]="'Username'" disabled>
+              <mat-icon color="primary">account_circle</mat-icon>
+              </button>
             <mat-error *ngIf="loginFormGroup.controls['loginText'].invalid">{{validateUsername()}}</mat-error>
           </mat-form-field>
         </p>
@@ -20,20 +23,24 @@
         <p>
           <mat-form-field class="login_text_full_width">
             <mat-label>Password</mat-label>
-            <input formControlName="passwordText" matTooltip="Enter the password" type="password" matInput
-              placeholder="Password" autocomplete="off" value="" (keydown)="validateErrorMessage()">
+            <input formControlName="passwordText" [type]="hide ? 'text' : 'password'" matTooltip="Enter the password"
+              matInput placeholder="Password" autocomplete="off" value="" (keydown)="validateErrorMessage()">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon color="primary">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            </button>
             <mat-error *ngIf="loginFormGroup.controls['passwordText'].invalid">{{validatePass()}}</mat-error>
           </mat-form-field>
         </p>
 
         <p>
-          <button mat-raised-button color="primary" matTooltip="Login" class="login-button-width">Login</button>
+          <button mat-raised-button color="primary" matTooltip="Sign in" class="login-button-width">Sign in</button>
         </p>
         <p>
           <mat-error *ngIf="loginErrorFlag" class="login-small-font">{{ loginpwdErrMessage }}</mat-error>
         </p>
         <p>
-          <a href="#"><span class="md-accent login-small-font">Forgot Password?</span></a>
+          <a href="./login"><span class="md-accent login-small-font">Forgot Password?</span></a>
         </p>
       </form>
     </mat-card>
