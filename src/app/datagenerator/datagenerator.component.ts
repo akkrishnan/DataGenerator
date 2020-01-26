@@ -2,7 +2,8 @@ import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { EventEmitterService } from '../event-emitter.service';
 import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
-import { FormBuilder, FormGroup, NgForm, FormGroupDirective, FormControl, Validators, ValidatorFn } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FormBuilder, FormGroup, NgForm, FormGroupDirective, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import {
   ErrorStateMatcher,
   MatPaginator,
@@ -27,15 +28,6 @@ export interface JSONObject {
   value: string;
 }
 
-/** Error when invalid control is dirty, touched, or submitted. */
-export class CustomerErrorStateMatched implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: NgForm | FormGroupDirective | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.touched || control.dirty || isSubmitted));
-  }
-}
-
-
 @Component({
   selector: 'app-datagenerator',
   templateUrl: './datagenerator.component.html',
@@ -49,8 +41,15 @@ export class DatageneratorComponent implements OnInit {
   formGroup: FormGroup;
   post: any = '';
   durationInSeconds = 5;
+  isSubmitted = false;
+  isFormInValid = true;
   successMessage = 'Successfully submitted the request form';
   actionMessage = 'Success!';
+
+  tooltip: JSONObject[] = [
+    { key: 'Generate', value: 'Request to generate the data' },
+    { key: 'Reset', value: 'Reset and discard the changes' }
+  ];
 
   error: JSONObject[] = [
     { key: 'FileName', value: 'Enter file name without spaces. For eg., "NEWFILENAME01"' },
@@ -72,7 +71,7 @@ export class DatageneratorComponent implements OnInit {
 
   hint: JSONObject[] = [
     { key: 'FileName', value: 'Enter any file name. For eg., "NEWFILENAME01"' },
-    { key: 'Destination', value: 'Provide your desktop location' },
+    { key: 'Destination', value: 'Provide any location. For eg., "C:/Users/Public/Desktop/"' },
     { key: 'NoOfCols', value: 'Enter number of columns' },
     { key: 'NoOfRows', value: 'Enter number of rows' },
     { key: 'ColDelimeter', value: 'For eg. Comma (,) can be entered' }
@@ -154,14 +153,23 @@ export class DatageneratorComponent implements OnInit {
     userId: { value: 'userId', key: 'userId' }
   };
 
+  mandatoryControls = [
+    'FileName',
+    'Destination',
+    'NoOfCols',
+    'NoOfRows',
+    'ColDelimeter',
+    'StartingFrom',
+    'EndingTo',
+    'StartingLength',
+    'EndingLength',
+    'FixedLength'
+  ];
+
   title = 'Data Generator';
 
   filterDataTypeList: Observable<JsonFormat[]>;
   filterDataPatternList: Observable<JsonFormat[]>;
-
-
-  // create instance of custom ErrorStateMatcher
-  errorMatcher = new CustomerErrorStateMatched();
 
   constructor(
     private service: DatageneratorService,
@@ -173,7 +181,6 @@ export class DatageneratorComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.setChangeValidate();
 
     this.filterDataTypeList = this.formGroup.get('DataType').valueChanges
       .pipe(
@@ -194,13 +201,53 @@ export class DatageneratorComponent implements OnInit {
     }
   }
 
+  createForm() {
+    this.formGroup = new FormGroup({
+      FileName: new FormControl(''),
+      Destination: new FormControl('C:/Users/Public/Desktop'),
+      NoOfCols: new FormControl(1),
+      NoOfRows: new FormControl(1),
+      ColDelimeter: new FormControl(','),
+      AttributeName: new FormControl(''),
+      // dataName: new FormControl('', [Validators.required]),
+      DataType: new FormControl(''),
+      DataPattern: new FormControl(''),
+      StartingFrom: new FormControl(1),
+      EndingTo: new FormControl(1),
+      StartingLength: new FormControl(1),
+      EndingLength: new FormControl(1),
+      FixedLength: new FormControl(1),
+      CharactersFor: new FormControl('')
+    });
+    this.setDefaultValues();
+  }
+
   processFilterDataPattern() {
-    console.log('processFilterDataPattern=== == filterDataPatternList');
+    this.formGroup.get('DataPattern').setValue('');
+    console.log('processFilterDataPattern ==== filterDataPatternList');
     this.filterDataPatternList = this.formGroup.get('DataPattern').valueChanges
       .pipe(
         startWith(''),
         map(name => name ? this._filterPattern(name) : this.getFilterArray().slice())
       );
+  }
+
+  onChange(keyStr: string, param: string) {
+    this.isFormInValid = false;
+    const control = this.formGroup.get(keyStr);
+    Object.keys(this.formGroup.controls).forEach(key => {
+      for (const e of this.mandatoryControls) {
+        const controlValue = this.formGroup.get(e).value;
+        if (e === key) {
+          if (controlValue === null || controlValue.length === 0) {
+            this.isFormInValid = true;
+          }
+        }
+      }
+    });
+    if ((control.value === null || (control.value.length === 0)) && !this.isSubmitted && param === 'required') {
+      control.setErrors({ required: true });
+    }
   }
 
   showSuccessMessage(message: string, action: string) {
@@ -215,57 +262,6 @@ export class DatageneratorComponent implements OnInit {
 
   navigateToHome(urlString: string) {
     this.router.navigate([urlString]);
-  }
-
-  createForm() {
-    this.formGroup = new FormGroup({
-      FileName: new FormControl(''),
-      Destination: new FormControl(''),
-      NoOfCols: new FormControl(''),
-      NoOfRows: new FormControl(''),
-      ColDelimeter: new FormControl(''),
-      AttributeName: new FormControl(''),
-      // dataName: new FormControl('', [Validators.required]),
-      DataType: new FormControl(''),
-      DataPattern: new FormControl(''),
-      StartingFrom: new FormControl(''),
-      EndingTo: new FormControl(''),
-      StartingLength: new FormControl(''),
-      EndingLength: new FormControl(''),
-      FixedLength: new FormControl(''),
-      CharactersFor: new FormControl('')
-    });
-
-
-
-    /* this.formGroup.setValue({
-      FileName: '',
-      Destination: 'C:/Users/Public/Desktop',
-      NoOfCols: '1',
-      NoOfRows: '1',
-      ColDelimeter: ',',
-      AttributeName: '',
-      DataType: '',
-      DataPattern: '',
-      StartingFrom: '1',
-      EndingTo: '1',
-      StartingLength: '1',
-      EndingLength: '1',
-      FixedLength: '1',
-      CharactersFor: ''
-    }); */
-
-    this.formGroup.patchValue({
-      Destination: 'C:/Users/Public/Desktop',
-      NoOfCols: '1',
-      NoOfRows: '1',
-      ColDelimeter: ',',
-      StartingFrom: '1',
-      EndingTo: '1',
-      StartingLength: '1',
-      EndingLength: '1',
-      FixedLength: '1'
-    });
   }
 
   private _filterDataType(value: string): JsonFormat[] {
@@ -299,32 +295,25 @@ export class DatageneratorComponent implements OnInit {
     return filterArr;
   }
 
-  setChangeValidate() {
-  }
-
-  returnMessage(param: string, infoMode: boolean) {
-    if (infoMode === false) {
-      for (const e of this.error) {
-        if (e.key === param) {
-          return e.value;
-        }
-      }
-    } else {
-      for (const e of this.hint) {
-        if (e.key === param) {
-          return e.value;
-        }
-      }
-    }
-  }
-
   validateErrorMessage(param: string) {
     const fieldValue = this.formGroup.get(param).value;
-    return fieldValue.length === 0 ? this.returnMessage(param, false) : '';
+    return fieldValue.length === 0 ? this.getObjectValue(param, this.error) : '';
   }
 
   getHintMessage(param: string) {
-    return this.returnMessage(param, true);
+    return this.getObjectValue(param, this.hint);
+  }
+
+  getTooltipText(param: string) {
+    return this.getObjectValue(param, this.tooltip);
+  }
+
+  getObjectValue(param: string, arrayObject: any) {
+    for (const e of arrayObject) {
+      if (e.key === param) {
+        return e.value;
+      }
+    }
   }
 
   // validateFileName() {
@@ -387,13 +376,6 @@ export class DatageneratorComponent implements OnInit {
   //   return this.validateErrorMessage('CharactersFor');
   // }
 
-  getFileNameHint() {
-    return this.getHintMessage('FileName');
-  }
-
-  getDestinationHint() {
-    return this.getHintMessage('Destination');
-  }
 
   getNoOfColsHint() {
     return this.getHintMessage('NoOfCols');
@@ -407,17 +389,16 @@ export class DatageneratorComponent implements OnInit {
     return this.getHintMessage('ColDelimeter');
   }
 
-  // triggerResize() {
-  //   // Wait for changes to be applied, then trigger textarea resize.
-  //   this._ngZone.onStable.pipe(take(1))
-  //     .subscribe(() => this.autosize.resizeToFitContent(true));
-  // }
-
   onReset() {
     if (this.formGroup.valid) {
-      // this.formGroup.reset();
+      this.formGroup.reset();
       this.setDefaultValues();
     }
+    this.isFormInValid = true;
+  }
+
+  resetTextField() {
+    console.log('resetTextField');
   }
 
   setDefaultValues() {
@@ -426,68 +407,31 @@ export class DatageneratorComponent implements OnInit {
     // this.formGroup.markAsUntouched();
     // this.formGroup.updateValueAndValidity();
 
-    this.formGroup.reset({
+    this.formGroup.patchValue({
       FileName: '',
       Destination: 'C:/Users/Public/Desktop',
-      NoOfCols: '1',
-      NoOfRows: '1',
+      NoOfCols: 1,
+      NoOfRows: 1,
       ColDelimeter: ',',
       AttributeName: '',
       DataType: '',
       DataPattern: '',
-      StartingFrom: '1',
-      EndingTo: '1',
-      StartingLength: '1',
-      EndingLength: '1',
-      FixedLength: '1',
+      StartingFrom: 1,
+      EndingTo: 1,
+      StartingLength: 1,
+      EndingLength: 1,
+      FixedLength: 1,
       CharactersFor: ''
     });
-
-    /* this.formGroup.patchValue({
-      // FileName: '',
-      Destination: 'C:/Users/Public/Desktop',
-      NoOfCols: '1',
-      NoOfRows: '1',
-      ColDelimeter: ',',
-      AttributeName: '',
-      DataType: '',
-      DataPattern: '',
-      StartingFrom: '1',
-      EndingTo: '1',
-      StartingLength: '1',
-      EndingLength: '1',
-      FixedLength: '1',
-      CharactersFor: ''
-    }); */
+    this.formGroup.markAsUntouched();
+    this.isSubmitted = false;
   }
 
   onSubmit(post: any) {
     if (this.formGroup.valid) {
-      // console.log("Form Submitted!");
+      console.log('Form Submitted!');
       post.requestId = 0;
-
-      /* postFormatList = {
-        requestId: { value: 'Request ID', key: 'requestId' },
-        FileName: { value: 'File Name', key: 'FileName' },
-        Destination: { value: 'Destination', key: 'Destination' },
-        NoOfCols: { value: 'No. of Columns', key: 'NoOfCols' },
-        NoOfRows: { value: 'No. of Rows', key: 'NoOfRows' },
-        ColDelimeter: { value: 'Column Delimeter', key: 'ColDelimeter' },
-        AttributeName: { value: 'Attribute Name', key: 'AttributeName' },
-        DataType: { value: 'Data Type', key: 'DataType' },
-        DataPattern: { value: 'Data Pattern', key: 'DataPattern' },
-        StartingFrom: { value: 'Starting From', key: 'StartingFrom' },
-        EndingTo: { value: 'Ending To', key: 'EndingTo' },
-        StartingLength: { value: 'Starting Length', key: 'StartingLength' },
-        EndingLength: { value: 'Ending Length', key: 'EndingLength' },
-        FixedLength: { value: 'Fixed Length', key: 'FixedLength' },
-        CharactersFor: { value: 'Fixed Length', key: 'CharactersFor' },
-        userId: { value: 'userId', key: 'userId' }
-      }; */
-
-      /* newPost = {
-        post.this.postFormatList.requestId.value : post[this.postFormatList['requestId'].key]
-      } */
+      this.isSubmitted = true;
 
       this.service.getUserID().then(res => {
         console.log('========== res ===================');
@@ -495,23 +439,46 @@ export class DatageneratorComponent implements OnInit {
         console.log('========== res ===================');
         post.userId = res.userName;
         this.post = post;
+        this.service.postDataRequest(post).subscribe(postResponse => {
+          console.log(postResponse);
+          console.log('Form submission completed....');
+          this.generateDataRequest(post);
+        },
+          (err: HttpErrorResponse) => {
+            console.log(err);
+          });
+      }).catch(e => {
+        console.log(e);
+      });
+
+      /* this.service.getUserID().then(res => {
+        console.log('========== res ===================');
+        console.log(res.userName);
+        console.log('========== res ===================');
+        post.userId = res.userName;
+        this.post = post;
         this.service.postDataRequest(post).then(postResponse => {
           console.log(postResponse);
-          console.log('Form Submitted....');
-          // this.formGroup.reset();
+          console.log('Form submission completed....');
           this.generateDataRequest(post);
-
+        }).catch(e => {
+          console.log(e);
         });
-      });
+      }).catch(e => {
+        console.log(e);
+      }); */
     }
   }
 
   generateDataRequest(post: any) {
-    this.service.generateDataRequest(post).then(res => {
+    this.service.generateDataRequest(post).subscribe(res => {
       console.log('File Generated....');
       this.showSuccessMessage(this.successMessage, this.actionMessage);
-      this.setDefaultValues();
-    });
+      this.onReset();
+    },
+      (e: HttpErrorResponse) => {
+        console.log(e);
+      });
   }
 
   doReload() {

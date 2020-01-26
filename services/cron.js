@@ -10,7 +10,7 @@ const writeFile = fs.writeFile;
 var dynamicData;
 const directoryPath = path.join(__dirname, '../output');
 const topReqDataPath = './data/toprequests.json';
-const topRequestURL = 'http://dataserver/api/getTopRequests';
+const topRequestURL = 'http://localhost/api/getTopRequests';
 var finalArray = [];
 var outputArray = [];
 const statusObj = {
@@ -38,10 +38,11 @@ const cronScheduler = '*/5 * * * * *';
 }); */
 
 const job = cron.job(cronScheduler, () => {
-  console.log('running a task every 5 sec');
-  console.log(statusObj.DONE);
+  console.log('running a task every 5 sec'); 
   request(topRequestURL, function (error, response, data) {
     dynamicData = data;
+    console.log(data);
+    console.log('========== CALLED API');
     if (typeof data !== "undefined") {
       processTopRequest(dynamicData);
     }

@@ -33,7 +33,7 @@ generateCSVRouter.post('/', (req, res) => {
         const givenFileName = parsedData.FileName;
         var outputCSVPath = 'D:/TDM/Application/output/';
         // var outputCSVPath = './output/RequestForm_';
-        outputCSVPath = outputCSVPath + 'requestForm_' + requestId + '_INQUEUE' + fileExtn;
+        outputCSVPath = outputCSVPath + 'RequestForm_' + requestId + '_INQUEUE' + fileExtn;
 
         console.log({ outputCSVPath});        
 

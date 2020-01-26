@@ -9,6 +9,8 @@ const server = http.createServer(app);
 server.listen(port);
 server.on('listening', onListening);
 
+server.timeout = 2000;
+
 function onListening() {
   var addr = server.address(); // server.address().port
   debug('Listening on ' + port + ' ' + addr);

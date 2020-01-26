@@ -20,7 +20,7 @@ import { LoginService } from './login.service';
 export class LoginComponent implements OnInit {
 
   title = 'Login Screen';
-  loginTitle = 'Data Generator Tool';
+  loginTitle = 'Data Generator Application';
 
   loginErrorFlag = false;
 

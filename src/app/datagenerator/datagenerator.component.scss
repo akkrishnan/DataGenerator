@@ -14,7 +14,7 @@ $attributeContentStyleWidth: 325px;
 
 $length-card-width:350px;
 
-$mat-card-height : 310px;
+$mat-card-height : 370px;
 
 $app-form-height: 430px;
 $content-font-size: 12px;
@@ -27,6 +27,10 @@ $header-font-size: 16px;
 .app-form-container {
   display: flex;
   flex-direction: column;
+
+  .pad20 {
+    padding-bottom: 20px !important;
+  }
 
   ::ng-deep {
 
@@ -69,6 +73,10 @@ $header-font-size: 16px;
 
     .mat-card-header .mat-card-subtitle:not(:first-child) {
       margin-top: -8px;
+    }
+
+    .required {
+      color: red;
     }
 
 

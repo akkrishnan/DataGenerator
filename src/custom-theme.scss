@@ -1,6 +1,6 @@
 @import '~@angular/material/theming';
 
-@include mat-core();
+
 
 $bv-brand: (50: #ffffff,
   100: #dde6f3,
@@ -36,3 +36,9 @@ $custom-theme-accent:mat-palette($mat-pink, A200, A100, A400);
 $custom-theme-warn: mat-palette($mat-red);
 $custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
 @include angular-material-theme($custom-theme);
+
+$typography-configuration: mat-typography-config($font-family: 'Cabin, "Helvetica Neue", sans-serif'
+);
+
+@include angular-material-typography($typography-configuration);
+@include mat-core($typography-configuration);

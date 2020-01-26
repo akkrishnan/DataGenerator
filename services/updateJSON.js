@@ -15,9 +15,12 @@ const successMessage = "Your request is successfully submitted";
 
 updateJSONRouter.post('/', (req, res) => {
   const requestBody = req.body;
+  const userID = requestBody.postData.userId;
   var parsedData = {};
-  console.log(requestBody);
-  console.log('========== requestBody =============');
+  console.log('========== requestBody && userID =============');
+  console.log(requestBody.postData);
+  console.log(userID);
+  console.log('========== requestBody && userID =============');
   readFile(topReqDataPath, 'utf8', (err, data) => {
     if (err) {
       throw err;
@@ -36,16 +39,16 @@ updateJSONRouter.post('/', (req, res) => {
       console.log(parsedData);
       console.log('====== parseData ==&&&&&====');
 
-      const sourceData = requestBody;
+      const sourceData = requestBody.postData;
       // console.log(sourceData);
-      console.log('============== userId ==============');
-      console.log(requestBody.userId);
-      console.log('============== userId ==============');
+      console.log('============== userID ==============');
+      console.log(userID);
+      console.log('============== userID ==============');
       const requestId = parseInt(parsedData[0].id) + 1;
 
       const newRecord = {
         id: requestId,
-        name: requestBody.userId,
+        name: userID,
         status: 'IN QUEUE',
         color: 'lime'
       };
@@ -66,10 +69,8 @@ updateJSONRouter.post('/', (req, res) => {
         console.log('Successfully updated the Top Requests JSON!');
       });
       console.log('=============== sourceData ==============');
-      sourceData.requestId = requestId;
-      
       console.log(sourceData);
-
+      sourceData.requestId = requestId;      
       writeFile(requestDataPath, JSON.stringify(sourceData), (err) => {
         if (err) {
           console.log(err); // Do something to handle the error or just throw it

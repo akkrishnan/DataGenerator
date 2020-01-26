@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
   loggedInUser = '';
 
-  title = 'Data Generator Tool';
+  title = 'Data Generator Application';
 
   encryptSecretKey = '$datagen$';
 
@@ -32,9 +32,19 @@ export class HeaderComponent implements OnInit {
   }
 
   getUserDetails() {
-    this.service.getUserContext().then(res => {
+    /* this.service.getUserContext().then(res => {
       // console.log(this.decryptData(res.userDetails.userName));
+      console.log(res);
+      console.log('loggedInUser');
       this.loggedInUser = this.decryptData(res.userDetails.userName);
+    }); */
+    this.service.getUserContext().then(res => {
+      console.log(this.decryptData(res.userDetails.userName));
+      this.loggedInUser = this.decryptData(res.userDetails.userName);
+    }).catch(e => {
+      console.log(e);
+      this.loggedInUser = '';
+      // this.doLogout();
     });
   }
 

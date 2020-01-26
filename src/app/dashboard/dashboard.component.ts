@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
 
 import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { DashboardService } from './dashboard.service';
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   ErrorStateMatcher,
   MatPaginator,
@@ -83,13 +84,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getAllRequests() {
-    this.service.getList().then(res => {
+    /* this.service.getList().then(res => {
       this.displayedColumns = Object.keys(res[0]);
       this.displayedColumns.splice(this.displayedColumns.indexOf('color'), 1);
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    });
+    }); */
+
+    this.service.getList().subscribe(res => {
+      this.displayedColumns = Object.keys(res[0]);
+      this.displayedColumns.splice(this.displayedColumns.indexOf('color'), 1);
+      this.dataSource = new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    },
+      (e: HttpErrorResponse) => {
+        console.log(e);
+      });
   }
 
   applyFilter(filterValue: string) {
