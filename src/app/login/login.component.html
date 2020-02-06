@@ -1,48 +1,67 @@
-<div class="header_banner">
-  <div class="login_header_banner">
-    <div>{{ loginTitle | uppercase }}</div>
-    <!-- <div class="blue-gradient-overlay"></div>     -->
+<div class="login_div">
+  <div class="header_banner">
+    <div class="login_header_banner">
+      <div>{{ loginTitle | uppercase }}</div>
+      <!-- <div class="blue-gradient-overlay"></div>     -->
+    </div>
   </div>
-</div>
-<div width="100%" align="center">
-  <div class="login_card mat-elevation-z8">
-    <mat-card>
-      <form class="login_form" [formGroup]="loginFormGroup" (ngSubmit)="onSubmit(loginFormGroup.value)" class="form">
-        <p>
-          <mat-form-field class="login_text_full_width">
-            <mat-label>Username</mat-label>
-            <input formControlName="loginText" matInput matTooltip="Enter the username" placeholder="Username"
-              autocomplete="off" value="" (keydown)="validateErrorMessage()">
+  <div width="100%" align="center" class="login_section">
+    <div class="login_card mat-elevation-z8">
+      <mat-card>
+        <mat-card-header align="center">
+          <!-- <mat-card-title>Sign in to Network Analytics Application</mat-card-title> -->
+          <!-- <mat-card-subtitle>Please fill all the below fields to generate data
+                                        </mat-card-subtitle> -->
+        </mat-card-header>
+        <form class="login_form" [formGroup]="loginFormGroup" (ngSubmit)="onSubmit(loginFormGroup.value)" class="form">
+          <p>
+            <mat-form-field class="login_text_full_width">
+              <mat-label>Username</mat-label>
+              <input formControlName="loginText" matInput matTooltip="Enter the username" placeholder="Username"
+                autocomplete="off" value="" (keydown)="hideErrorMessage()">
               <button mat-icon-button matSuffix [attr.aria-label]="'Username'" disabled>
-              <mat-icon color="primary">account_circle</mat-icon>
+                <mat-icon color="primary">account_circle</mat-icon>
               </button>
-            <mat-error *ngIf="loginFormGroup.controls['loginText'].invalid">{{validateUsername()}}</mat-error>
-          </mat-form-field>
-        </p>
+              <mat-error *ngIf="loginFormGroup.controls['loginText'].invalid">{{validateUsername()}}</mat-error>
+            </mat-form-field>
+          </p>
 
-        <p>
-          <mat-form-field class="login_text_full_width">
-            <mat-label>Password</mat-label>
-            <input formControlName="passwordText" [type]="hide ? 'text' : 'password'" matTooltip="Enter the password"
-              matInput placeholder="Password" autocomplete="off" value="" (keydown)="validateErrorMessage()">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide">
-              <mat-icon color="primary">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-            </button>
-            <mat-error *ngIf="loginFormGroup.controls['passwordText'].invalid">{{validatePass()}}</mat-error>
-          </mat-form-field>
-        </p>
+          <p>
+            <mat-form-field class="login_text_full_width">
+              <mat-label>Password</mat-label>
+              <input formControlName="passwordText" [type]="hide ? 'text' : 'password'" matTooltip="Enter the password"
+                matInput placeholder="Password" autocomplete="off" value="" (keydown)="hideErrorMessage()">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon color="primary">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="loginFormGroup.controls['passwordText'].invalid">{{validatePass()}}</mat-error>
+            </mat-form-field>
+          </p>
 
-        <p>
-          <button mat-raised-button color="primary" matTooltip="Sign in" class="login-button-width">Sign In</button>
-        </p>
-        <p>
-          <mat-error *ngIf="loginErrorFlag" class="login-small-font">{{ loginpwdErrMessage }}</mat-error>
-        </p>
-        <p>
-          <a href="./login"><span class="md-accent login-small-font">Forgot Password?</span></a>
-        </p>
-      </form>
-    </mat-card>
+          <div>
+            <table width="80%">
+              <tr>
+                <td width="50%">
+                  <mat-checkbox class="checkColor login-small-font">Remember me!</mat-checkbox>
+                </td>
+                <td align="right">
+                  <a href="./login"><span class="md-accent login-small-font">Forgot Password?</span></a>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <p>
+            <button mat-raised-button color="primary" matTooltip="Sign in" class="login-button-width">Sign In</button>
+          </p>
+
+          <div style="height: 30px;">
+            <mat-error *ngIf="loginErrorFlag" class="login-error-message">{{ loginpwdErrMessage }}</mat-error>
+          </div>
+        </form>
+      </mat-card>
+    </div>
   </div>
+
 </div>

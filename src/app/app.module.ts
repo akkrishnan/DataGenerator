@@ -20,6 +20,7 @@ import {
   MatPaginatorModule,
   MatSortModule,
   MatTabsModule,
+  MatCheckboxModule,
   MatSnackBarModule
 } from '@angular/material';
 
@@ -64,6 +65,7 @@ import { MessageBarComponent } from './message-bar/message-bar.component';
     MatPaginatorModule,
     MatSortModule,
     MatTabsModule,
+    MatCheckboxModule,
     MatSnackBarModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes)

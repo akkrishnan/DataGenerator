@@ -20,7 +20,7 @@ import { LoginService } from './login.service';
 export class LoginComponent implements OnInit {
 
   title = 'Login Screen';
-  loginTitle = 'Data Generator Application';
+  loginTitle = 'Infinite Data Management Platform';
 
   loginErrorFlag = false;
 
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   loginErrMessage = 'Please enter the username';
   pwdErrMessage = 'Please enter the password';
 
-  loginpwdErrMessage = 'Please enter both username & password to login';
+  loginpwdErrMessage = 'Technical difficulties! Please try again!';
 
   ngOnInit() {
     this.createLoginForm();
@@ -70,36 +70,55 @@ export class LoginComponent implements OnInit {
     return errorFlag ? this.pwdErrMessage : '';
   }
 
-  onSubmit(post: any) {
+  onSubmit() {
 
     // this.userName = this.loginFormGroup.get('loginText').value;
 
     this.post = {
       userName: this.loginFormGroup.get('loginText').value,
-      password: this.loginFormGroup.get('passwordText').value,
+      password: btoa(this.loginFormGroup.get('passwordText').value),
       language: 'en'
     };
-    // console.log(post);
-    // console.log(this.post);
 
     this.service.postUserContext(this.post).then(res => {
+      console.log('Logged in...');
+      if (res.success === true) {
+        if (!this.validateLoginFields()) {
+          this.router.navigate(['/home']);
+        }
+      } else {
+        console.log(res.message);
+        this.loginpwdErrMessage = res.message;
+        this.loginErrorFlag = true;
+      }
+      /* this.service.getUserById(this.loginFormGroup.get('loginText').value).then(getRes => {
+      }).catch(e => {
+        console.log(e);
+      }); */
+    }).catch(e => {
+      console.log(e);
+    });
+
+    /* this.service.postUserContext(this.post).then(res => {
       console.log('Logged in successfully...');
       console.log(res);
       if (!this.validateLoginFields()) {
         this.router.navigate(['/home']);
       }
-    });
-
+    }); */
 
   }
 
   validateLoginFields() {
-    this.loginErrorFlag = (this.validateTextField('loginText') || this.validateTextField('passwordText'));
-    return this.loginErrorFlag;
+    return (this.validateTextField('loginText') || this.validateTextField('passwordText'));
   }
 
-  validateErrorMessage() {
-    this.loginErrorFlag = (this.validateTextField('loginText') || this.validateTextField('passwordText'));
+  hideErrorMessage(){
+    this.loginErrorFlag = false;
   }
+
+  /* validateErrorMessage() {
+    this.loginErrorFlag = (this.validateTextField('loginText') || this.validateTextField('passwordText'));
+  } */
 
 }

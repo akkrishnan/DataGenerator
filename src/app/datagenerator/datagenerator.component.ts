@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, NgZone, ViewChild, AfterViewInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { EventEmitterService } from '../event-emitter.service';
 import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
@@ -17,6 +17,8 @@ import { Observable } from 'rxjs';
 import { take, startWith, map } from 'rxjs/operators';
 // import { CustomValidatorsService } from './custom-validators.service';
 import { DatageneratorService } from './datagenerator.service';
+import { HeaderComponent } from '../header/header.component';
+import { EventEmitter } from 'events';
 
 export interface JsonFormat {
   name: string;
@@ -36,7 +38,8 @@ export interface JSONObject {
     DatageneratorService
   ]
 })
-export class DatageneratorComponent implements OnInit {
+
+export class DatageneratorComponent implements OnInit, AfterViewInit {
 
   formGroup: FormGroup;
   post: any = '';
@@ -45,6 +48,9 @@ export class DatageneratorComponent implements OnInit {
   isFormInValid = true;
   successMessage = 'Successfully submitted the request form';
   actionMessage = 'Success!';
+  username = '';
+
+  @ViewChild(HeaderComponent, { static: false }) headercomponent: HeaderComponent;
 
   tooltip: JSONObject[] = [
     { key: 'Generate', value: 'Request to generate the data' },
@@ -52,6 +58,7 @@ export class DatageneratorComponent implements OnInit {
   ];
 
   error: JSONObject[] = [
+    { key: 'UserName', value: 'Enter your username' },
     { key: 'FileName', value: 'Enter file name without spaces. For eg., "NEWFILENAME01"' },
     { key: 'Destination', value: 'Enter Destination, you can provide your desktop location' },
     { key: 'NoOfCols', value: 'Enter a number' },
@@ -70,6 +77,7 @@ export class DatageneratorComponent implements OnInit {
   ];
 
   hint: JSONObject[] = [
+    { key: 'UserName', value: 'Enter your username' },
     { key: 'FileName', value: 'Enter any file name. For eg., "NEWFILENAME01"' },
     { key: 'Destination', value: 'Provide any location. For eg., "C:/Users/Public/Desktop/"' },
     { key: 'NoOfCols', value: 'Enter number of columns' },
@@ -136,6 +144,7 @@ export class DatageneratorComponent implements OnInit {
 
   postFormatList = {
     requestId: { value: 'Request ID', key: 'requestId' },
+    UserName: { value: 'User Name', key: 'UserName' },
     FileName: { value: 'File Name', key: 'FileName' },
     Destination: { value: 'Destination', key: 'Destination' },
     NoOfCols: { value: 'No. of Columns', key: 'NoOfCols' },
@@ -154,6 +163,7 @@ export class DatageneratorComponent implements OnInit {
   };
 
   mandatoryControls = [
+    'UserName',
     'FileName',
     'Destination',
     'NoOfCols',
@@ -179,6 +189,15 @@ export class DatageneratorComponent implements OnInit {
     private router: Router
   ) { }
 
+  ngAfterViewInit() {
+  }
+
+  onLogin(user: string) {
+    this.username = user;
+    this.formGroup.get('UserName').setValue(this.username);
+    // console.log(this.headercomponent.loggedInUser);
+  }
+
   ngOnInit() {
     this.createForm();
 
@@ -203,6 +222,7 @@ export class DatageneratorComponent implements OnInit {
 
   createForm() {
     this.formGroup = new FormGroup({
+      UserName: new FormControl(this.username),
       FileName: new FormControl(''),
       Destination: new FormControl('C:/Users/Public/Desktop'),
       NoOfCols: new FormControl(1),
@@ -408,6 +428,7 @@ export class DatageneratorComponent implements OnInit {
     // this.formGroup.updateValueAndValidity();
 
     this.formGroup.patchValue({
+      UserName: this.username,
       FileName: '',
       Destination: 'C:/Users/Public/Desktop',
       NoOfCols: 1,
@@ -433,23 +454,22 @@ export class DatageneratorComponent implements OnInit {
       post.requestId = 0;
       this.isSubmitted = true;
 
-      this.service.getUserID().then(res => {
-        console.log('========== res ===================');
-        console.log(res.userName);
-        console.log('========== res ===================');
-        post.userId = res.userName;
-        this.post = post;
-        this.service.postDataRequest(post).subscribe(postResponse => {
-          console.log(postResponse);
-          console.log('Form submission completed....');
-          this.generateDataRequest(post);
-        },
-          (err: HttpErrorResponse) => {
-            console.log(err);
-          });
-      }).catch(e => {
-        console.log(e);
+      // this.service.getUserID().then(res => {
+      console.log('========== res ===================');
+      console.log(this.username);
+      console.log('========== res ===================');
+      post.userId = this.username;
+      this.post = post;
+      this.service.postDataRequest(post).subscribe(postResponse => {
+        console.log(postResponse);
+        console.log('Form submission completed....');
+        this.generateDataRequest(post);
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
       });
+      // }).catch(e => {
+      //   console.log(e);
+      // });
 
       /* this.service.getUserID().then(res => {
         console.log('========== res ===================');

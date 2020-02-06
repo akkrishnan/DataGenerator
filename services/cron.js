@@ -5,11 +5,13 @@ const express = require('express');
 const http = require('http');
 const request = require('request');
 const fs = require('fs');
+const config = require('./config');
 // const readFile = fs.readFile;
 const writeFile = fs.writeFile;
 var dynamicData;
+// const directoryPath = path.join(__dirname, '../../../../../TDM/Application/output');
 const directoryPath = path.join(__dirname, '../output');
-const topReqDataPath = './data/toprequests.json';
+const topReqDataPath = config.topReqDataPath();
 const topRequestURL = 'http://localhost/api/getTopRequests';
 var finalArray = [];
 var outputArray = [];
@@ -92,12 +94,12 @@ function processTopRequest(dynamicData) {
     console.log(dynamicData);
     console.log('============== updating this data dynamicData=================== ');
 
-    writeFile(topReqDataPath, JSON.stringify(dynamicData), (err) => {
+    writeFile(topReqDataPath, dynamicData, (err) => {
       if (err) {
         console.log(err); // Do something to handle the error or just throw it
         throw new Error(err);
       }
-      console.log('Successfully updated the top requests JSON!');
+      console.log('Successfully updated the top requests!');
     });
   });
 }

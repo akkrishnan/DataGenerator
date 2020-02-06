@@ -1,16 +1,14 @@
 /*jshint esversion: 6 */
 const express = require('express');
+// const request = require('request');
 const updateJSONRouter = express.Router();
 const fs = require('fs');
 const readFile = fs.readFile;
 const writeFile = fs.writeFile;
-// const config = require('../config');
-const requestDataPath = './data/requestData.json';
-const topReqDataPath = './data/toprequests.json';
-// const topReqDataPath = config.topReqDataPath;
-// const requestDataPath = config.requestDataPath;
-const request = require('request');
-const userId = 'ADMIN';
+const config = require('./config');
+const requestDataPath = config.requestDataPath();
+const topReqDataPath = config.topReqDataPath();
+// const userId = 'ADMIN';
 const successMessage = "Your request is successfully submitted";
 
 updateJSONRouter.post('/', (req, res) => {
@@ -66,7 +64,7 @@ updateJSONRouter.post('/', (req, res) => {
           console.log(err); // Do something to handle the error or just throw it
           throw new Error(err);
         }
-        console.log('Successfully updated the Top Requests JSON!');
+        console.log('Successfully updated the Top Requests!');
       });
       console.log('=============== sourceData ==============');
       console.log(sourceData);
@@ -76,7 +74,7 @@ updateJSONRouter.post('/', (req, res) => {
           console.log(err); // Do something to handle the error or just throw it
           throw new Error(err);
         }
-        console.log('Successfully saved to new JSON!');
+        console.log('New record is successfully saved!');
       });
 
     } catch (e) {

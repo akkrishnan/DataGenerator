@@ -8,7 +8,7 @@ $triple-card-width: 105px;
 
 $double-card-width : 195px;
 
-$req-form-content-width : 400px;
+$req-form-content-width : 710px;
 
 $attributeContentStyleWidth: 325px;
 
@@ -99,6 +99,16 @@ $header-font-size: 16px;
     margin-top: 10px;
     height: $app-form-height;
     overflow-y: auto;
+
+    .mat-card:not([class*=mat-elevation-z]) {
+      box-shadow: none;
+    }
+  }
+
+  .generate-div {
+    .mat-card:not([class*=mat-elevation-z]) {
+      box-shadow: none;
+    }
   }
 
   .headerToolBar span {
@@ -110,9 +120,9 @@ $header-font-size: 16px;
     vertical-align: top;
   }
 
-  mat-form-field {
+  /* mat-form-field {
     width: $fieldWidth;
-  }
+  } */
 
   .cardWidth {
     width: $cardWidth;
@@ -126,7 +136,6 @@ $header-font-size: 16px;
 
   .req-form-card-width {
     width: $req-form-content-width;
-    height: $mat-card-height;
   }
 
   ::ng-deep .attributeContentStyle {

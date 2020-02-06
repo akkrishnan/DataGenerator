@@ -1,21 +1,34 @@
 <!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
-<app-header></app-header>
+<app-header (login)="onLogin($event)"></app-header>
 <div class="app-form-container">
   <form [formGroup]="formGroup" class="form" novalidate>
     <div align="center" class="app-form-container-div">
-      <mat-card class="mat-card mat-elevation-z3">
+      <mat-card class="mat-card">
+      <!-- <mat-card class="mat-card mat-elevation-z3"> -->
         <mat-card-content>
           <div align="center">
             <table border="0">
               <tr>
-                <td class="vAlignTop">
+                <td align="center" colspan="3" class="vAlignTop">
                   <mat-card class="req-form-card-width mat-elevation-z3">
                     <mat-card-header align="left">
-                      <mat-card-title>Request Form</mat-card-title>
+                      <mat-card-title>Data Generation Request</mat-card-title>
                       <!-- <mat-card-subtitle>Please fill all the below fields to generate data
                                             </mat-card-subtitle> -->
                     </mat-card-header>
                     <mat-card-content class="mat-card-content req-form-content">
+                        <div class="pad20">
+                            <mat-form-field appearance="outline">
+                              <mat-label>User Name <span class="required">*</span></mat-label>
+                              <input matInput formControlName="UserName" autocomplete="off" placeholder="User Name"
+                                (keyup)="onChange('UserName', 'required')">
+                              <mat-error *ngIf="!isSubmitted && formGroup.controls['UserName'].hasError('required')">
+                                {{ getObjectValue('UserName', error) }}
+                              </mat-error>
+                              <mat-hint>{{ getHintMessage('UserName') }}</mat-hint>
+                            </mat-form-field>
+                          </div>
+
                       <div class="pad20">
                         <mat-form-field appearance="outline">
                           <mat-label>File Name <span class="required">*</span></mat-label>
@@ -86,7 +99,11 @@
                     </mat-card-content>
                   </mat-card>
                 </td>
-                <td width="5"></td>
+              </tr>
+              <tr>
+                <td colspan="4"><div style="height: 20px;"></div></td>
+              </tr>
+              <tr>
                 <td class="vAlignTop">
                   <mat-card class="length-card-width mat-elevation-z3">
                     <mat-card-header align="left">
@@ -251,7 +268,7 @@
 
     </div>
 
-    <div align="center">
+    <div align="center" class="generate-div">
       <mat-card class="generate-style">
         <mat-card-content>
           <p>

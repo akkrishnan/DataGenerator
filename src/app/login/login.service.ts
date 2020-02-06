@@ -10,6 +10,16 @@ export class LoginService {
 
   private url = './api/userContext';
 
+  private getUserByIdUrl = './api/getUserById/';
+
+  getUserById(param: string): Promise<any> {
+    const url = `${this.getUserByIdUrl}` + param;
+    return this.http.get(url)
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+
   postUserContext(postData: object): Promise<any> {
     const url = `${this.url}`;
     return this.http.post(url, postData)

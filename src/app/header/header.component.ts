@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
-import { EventEmitter } from 'protractor';
+// import { EventEmitter } from 'protractor';
 
 import { HeaderService } from './header.service';
 
@@ -16,11 +16,16 @@ import * as CryptoJS from 'crypto-js';
 })
 export class HeaderComponent implements OnInit {
 
-  loggedInUser = '';
+  // tslint:disable-next-line: no-inferrable-types
+  loggedInUser: string = '';
 
-  title = 'Data Generator Application';
+  @Output() login = new EventEmitter<string>();
 
-  encryptSecretKey = '$datagen$';
+  // tslint:disable-next-line: no-inferrable-types
+  title: string = 'Infinite Data Management Platform';
+
+  // tslint:disable-next-line: no-inferrable-types
+  encryptSecretKey: string = '$datagen$';
 
   constructor(
     private service: HeaderService,
@@ -39,8 +44,9 @@ export class HeaderComponent implements OnInit {
       this.loggedInUser = this.decryptData(res.userDetails.userName);
     }); */
     this.service.getUserContext().then(res => {
-      console.log(this.decryptData(res.userDetails.userName));
+      // console.log(this.decryptData(res.userDetails.userName));
       this.loggedInUser = this.decryptData(res.userDetails.userName);
+      this.login.emit(this.loggedInUser);
     }).catch(e => {
       console.log(e);
       this.loggedInUser = '';
