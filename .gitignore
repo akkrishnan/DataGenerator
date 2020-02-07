@@ -13,6 +13,8 @@
 # output folder
 /output
 
+# data folder
+/data
 
 # profiling files
 chrome-profiler-events*.json
