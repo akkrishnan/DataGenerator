@@ -13,10 +13,7 @@ const getUserById = express.Router();
 
 mongoose.connect(mongoURI, options);
 
-const UsersModel = mongoose.model("users", {
-  name: String,
-  email: String
-});
+const UsersModel = mongoose.model("users", {});
 
 getAllUsers.get('/', async (req, res) => {
   try {
@@ -29,9 +26,25 @@ getAllUsers.get('/', async (req, res) => {
 
 getUserById.get('/', async (req, res) => {
   try {
-    var result = await UsersModel.find({
-      name: parsePathVariable(req.baseUrl)
-    }).exec();
+    // var result = await UsersModel.find({
+    //   name: parsePathVariable(req.baseUrl)
+    // }).exec();
+    var result = await UsersModel.aggregate([
+      {
+        $match: {
+          name: parsePathVariable(req.baseUrl)
+        }
+      },
+      {
+        $lookup:
+        {
+          localField: 'role',
+          from: 'roles',
+          foreignField: 'key',
+          as: 'roleId'
+        }
+      }
+    ]);
     if (Object.keys(result).length === 0) {
       result = {};
     }
@@ -45,7 +58,7 @@ parsePathVariable = (param) => {
   url = param.split('/');
   url = url[url.length - 1];
   return url;
-}
+};
 
 module.exports = {
   getAllUsers,

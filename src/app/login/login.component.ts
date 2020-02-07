@@ -80,24 +80,30 @@ export class LoginComponent implements OnInit {
       language: 'en'
     };
 
-    this.service.postUserContext(this.post).then(res => {
-      console.log('Logged in...');
-      if (res.success === true) {
-        if (!this.validateLoginFields()) {
-          this.router.navigate(['/home']);
+    if (!this.validateLoginFields()) {
+      this.service.postUserContext(this.post).then(res => {
+        console.log('Logged in...');
+        if (res.success === true) {
+          // tslint:disable-next-line: no-inferrable-types
+          let navUrl: string = '/home';
+          if (res.userDetails.roleId === 2) {
+            navUrl = '/datagen';
+          }
+          this.router.navigate([navUrl]);
+
+        } else {
+          console.log(res.message);
+          this.loginpwdErrMessage = res.message;
+          this.loginErrorFlag = true;
         }
-      } else {
-        console.log(res.message);
-        this.loginpwdErrMessage = res.message;
-        this.loginErrorFlag = true;
-      }
-      /* this.service.getUserById(this.loginFormGroup.get('loginText').value).then(getRes => {
+        /* this.service.getUserById(this.loginFormGroup.get('loginText').value).then(getRes => {
+        }).catch(e => {
+          console.log(e);
+        }); */
       }).catch(e => {
         console.log(e);
-      }); */
-    }).catch(e => {
-      console.log(e);
-    });
+      });
+    }
 
     /* this.service.postUserContext(this.post).then(res => {
       console.log('Logged in successfully...');
@@ -113,7 +119,7 @@ export class LoginComponent implements OnInit {
     return (this.validateTextField('loginText') || this.validateTextField('passwordText'));
   }
 
-  hideErrorMessage(){
+  hideErrorMessage() {
     this.loginErrorFlag = false;
   }
 

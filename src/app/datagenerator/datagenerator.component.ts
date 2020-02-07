@@ -19,6 +19,7 @@ import { take, startWith, map } from 'rxjs/operators';
 import { DatageneratorService } from './datagenerator.service';
 import { HeaderComponent } from '../header/header.component';
 import { EventEmitter } from 'events';
+import * as CryptoJS from 'crypto-js';
 
 export interface JsonFormat {
   name: string;
@@ -49,6 +50,9 @@ export class DatageneratorComponent implements OnInit, AfterViewInit {
   successMessage = 'Successfully submitted the request form';
   actionMessage = 'Success!';
   username = '';
+
+  // tslint:disable-next-line: no-inferrable-types
+  encryptSecretKey: string = '$datagen$';
 
   @ViewChild(HeaderComponent, { static: false }) headercomponent: HeaderComponent;
 
@@ -192,10 +196,24 @@ export class DatageneratorComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
-  onLogin(user: string) {
-    this.username = user;
+  onLogin(user: any) {
+    // this.username = this.decryptData(user);
+    // console.log(this.decryptData(user.userName));
+    this.username = this.decryptData(user.userName);
     this.formGroup.get('UserName').setValue(this.username);
     // console.log(this.headercomponent.loggedInUser);
+  }
+
+  decryptData(data: string) {
+    try {
+      const bytes = CryptoJS.AES.decrypt(data, this.encryptSecretKey);
+      if (bytes.toString()) {
+        return bytes.toString(CryptoJS.enc.Utf8);
+      }
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   ngOnInit() {

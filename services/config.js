@@ -2,6 +2,7 @@
 const userContextDataPath = './data/usercontext.json';
 const topReqDataPath = './data/toprequests.json';
 const requestDataPath = './data/requestData.json';
+const getUserByIdPath = 'http://dataserver/api/getUserById/';
 const outputCSVPath = './output/';
 const fontFamily = 'Lato';
 const startupStyle = 'font-family:' + fontFamily + '; color: #284770; font-weight:600;';
@@ -13,6 +14,7 @@ module.exports = {
   userContextDataPath: () => userContextDataPath,
   topReqDataPath: () => topReqDataPath,
   requestDataPath: () => requestDataPath,
+  getUserByIdPath: () => getUserByIdPath,
   outputCSVPath: () => outputCSVPath,
   startupMessage: () => startupMessage,
   notFoundMessage: () => notFoundMessage

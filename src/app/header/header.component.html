@@ -26,10 +26,9 @@
     <div class="mat-elevation-z6">
       <mat-toolbar color="secondary">
         <nav class="nav-toolbar">
-          <button mat-raised-button matTooltip="Data Request Summary" (click)="navigateToHome('home')">Data Request
+          <button mat-raised-button matTooltip="Data Request Summary" (click)="navigateToHome('home')" *ngIf="isAdmin">Data Request
             Summary</button>&nbsp;&nbsp;
-          <button mat-raised-button matTooltip="Create Request Form" (click)="navigateToHome('datagen')">Create Request
-            Form</button>
+          <button mat-raised-button matTooltip="Create Request Form" (click)="navigateToHome('datagen')" *ngIf="!isAdmin">Create New</button>
             <!-- &nbsp;&nbsp;
           <button mat-raised-button matTooltip="Dashboard" (click)="navigateToHome('home')">Dashboard</button> -->
           <!-- <button mat-raised-button matTooltip="Dashboard"

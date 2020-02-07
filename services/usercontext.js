@@ -25,7 +25,7 @@ postUserContext.post('/', (req, res) => {
   console.log(requestBody.userName);
   console.log(passwd);
 
-  const getUserByIdUrlPath = 'http://dataserver/api/getUserById/' + requestBody.userName;
+  const getUserByIdUrlPath = config.getUserByIdPath() + requestBody.userName;
   console.log(getUserByIdUrlPath);
 
   request(getUserByIdUrlPath, function (error, response, data) {
@@ -33,7 +33,9 @@ postUserContext.post('/', (req, res) => {
       if (Object.keys(JSON.parse(data)).length > 0) {
         console.log('========== CALLED API');
         console.log(requestBody.password);
+        console.log(data);
         console.log(JSON.parse(data)[0].password);
+        parsedData = JSON.parse(data)[0];
         console.log('========== CALLED API');
         if (requestBody.password === JSON.parse(data)[0].password) {
           responseJSON = {
@@ -41,6 +43,9 @@ postUserContext.post('/', (req, res) => {
             userDetails: {
               userName: util.encrypt(requestBody.userName),
               password: Buffer.from(passwd).toString('base64'),
+              email : parsedData.email,
+              role : parsedData.role,
+              roleId : parsedData.roleId[0].roleId,
               language: 'en'
             }
           };
