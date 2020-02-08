@@ -1,8 +1,8 @@
 /*jshint esversion: 6 */
 const cron = require('cron');
 const path = require('path');
-const express = require('express');
-const http = require('http');
+// const express = require('express');
+// const http = require('http');
 const request = require('request');
 const fs = require('fs');
 const config = require('./config');
@@ -12,7 +12,7 @@ var dynamicData;
 // const directoryPath = path.join(__dirname, '../../../../../TDM/Application/output');
 const directoryPath = path.join(__dirname, '../output');
 const topReqDataPath = config.topReqDataPath();
-const topRequestURL = 'http://localhost/api/getTopRequests';
+const topRequestURL = config.topRequestsPath();
 var finalArray = [];
 var outputArray = [];
 const statusObj = {

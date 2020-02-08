@@ -1,9 +1,10 @@
 {
-  "name": "data-generator",
-  "version": "0.0.0",
+  "name": "data-management-platform",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng build && nodemon server.js",
+    "start_unused": "ng build && forever --minUptime 3000 --spinSleepTime 2000 start ./forever/development.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -14,7 +15,7 @@
     "url": "git+https://github.com/akkrishnan/DataGenerator.git"
   },
   "keywords": [
-    "data-generator"
+    "data-management-platform"
   ],
   "author": "krish",
   "dependencies": {
@@ -34,6 +35,8 @@
     "crypto-js": "^3.1.9-1",
     "csvjson": "^5.1.0",
     "express": "^4.17.1",
+    "forever": "^2.0.0",
+    "forever-monitor": "^2.0.0",
     "hammerjs": "^2.0.8",
     "highcharts-angular": "^2.4.0",
     "mongodb": "^3.5.2",

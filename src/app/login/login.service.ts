@@ -8,7 +8,7 @@ export class LoginService {
     private http: HttpClient
   ) { }
 
-  private url = './api/userContext';
+  private url = './api/validateLogin';
 
   private getUserByIdUrl = './api/getUserById/';
 

@@ -43,9 +43,9 @@ postUserContext.post('/', (req, res) => {
             userDetails: {
               userName: util.encrypt(requestBody.userName),
               password: Buffer.from(passwd).toString('base64'),
-              email : parsedData.email,
-              role : parsedData.role,
-              roleId : parsedData.roleId[0].roleId,
+              email: parsedData.email,
+              role: parsedData.role,
+              roleId: parsedData.roleId[0].roleId,
               language: 'en'
             }
           };

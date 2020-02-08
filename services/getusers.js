@@ -1,7 +1,8 @@
 /*jshint esversion: 8 */
 const mongoose = require('mongoose');
 const express = require('express');
-const mongoURI = "mongodb://localhost:27017/networkanalytics"; //connecting to networkanalytics
+const config = require('./config');
+const mongoURI = 'mongodb://' + config.hostPath() + ':' + config.dbPort() + '/' + config.databaseName(); //connecting to networkanalytics
 const options = {
   keepAlive: true,
   keepAliveInitialDelay: 300000,

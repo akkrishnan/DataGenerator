@@ -24,7 +24,7 @@ app.use('/home', express.static(path.join(__dirname, './dist/DataGenerator')));
 app.use('/datagen', express.static(path.join(__dirname, './dist/DataGenerator')));
 //Angular dist folder here
 app.use('/api', routes);
-app.use('/api/userContext', userContextRoutes.postUserContext);
+app.use('/api/validateLogin', userContextRoutes.postUserContext);
 app.use('/api/getUserContext', userContextRoutes.getUserContext);
 app.use('/api/getUserID', userContextRoutes.getUserID);
 app.use('/api/getTopRequests', topRequestRoutes);

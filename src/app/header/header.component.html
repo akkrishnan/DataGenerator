@@ -6,10 +6,13 @@
           <table width="100%" cellpadding="0" cellspacing="0" border="0">
             <tbody>
               <tr>
+                <td width="5%">
+                  <div class="logo"></div>
+                </td>
                 <td width="20%" align="left">
                   <h1>Welcome <strong class="user-highlight">{{loggedInUser | uppercase}}</strong></h1>
                 </td>
-                <td width="60%" align="center">
+                <td width="55%" align="center">
                   <h1 class="title-style">{{title | uppercase}}</h1>
                 </td>
                 <td width="20%"></td>
@@ -26,10 +29,12 @@
     <div class="mat-elevation-z6">
       <mat-toolbar color="secondary">
         <nav class="nav-toolbar">
-          <button mat-raised-button matTooltip="Data Request Summary" (click)="navigateToHome('home')" *ngIf="isAdmin">Data Request
+          <button mat-raised-button matTooltip="Data Request Summary" (click)="navigateToHome('home')"
+            *ngIf="isAdmin">Data Request
             Summary</button>&nbsp;&nbsp;
-          <button mat-raised-button matTooltip="Create Request Form" (click)="navigateToHome('datagen')" *ngIf="!isAdmin">Create New</button>
-            <!-- &nbsp;&nbsp;
+          <button mat-raised-button matTooltip="Create Request Form" (click)="navigateToHome('datagen')"
+            *ngIf="!isAdmin">Create New</button>
+          <!-- &nbsp;&nbsp;
           <button mat-raised-button matTooltip="Dashboard" (click)="navigateToHome('home')">Dashboard</button> -->
           <!-- <button mat-raised-button matTooltip="Dashboard"
                         (click)="navigateToHome('dashboard')">Dashboard</button> -->
