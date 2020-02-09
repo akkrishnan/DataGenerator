@@ -30,10 +30,11 @@ getUserById.get('/', async (req, res) => {
     // var result = await UsersModel.find({
     //   name: parsePathVariable(req.baseUrl)
     // }).exec();
+    let regExQueryString = new RegExp(['', parsePathVariable(req.baseUrl), '$'].join(''), 'i');
     var result = await UsersModel.aggregate([
       {
         $match: {
-          name: parsePathVariable(req.baseUrl)
+          name: regExQueryString
         }
       },
       {
