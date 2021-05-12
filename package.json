@@ -41,7 +41,7 @@
     "highcharts-angular": "^2.4.0",
     "mongodb": "^3.5.2",
     "mongoose": "^5.8.11",
-    "nodemailer": "^6.4.2",
+    "nodemailer": "^6.4.16",
     "path": "^0.12.7",
     "rxjs": "~6.4.0",
     "smtp": "^0.1.4",
